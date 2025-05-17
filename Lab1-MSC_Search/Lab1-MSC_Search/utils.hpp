@@ -11,13 +11,16 @@
 #include "WordMatch.hpp"
 
 namespace Utils {
+    extern bool has_generated_text;
+    extern bool has_generated_search_words;
+
     /**
      * @brief Handles an operation and prints an error if it fails.
      *
      * @param operation Function to call (must return int).
      * @param name Description of the operation (for error message).
      */
-    void handle_operation(int (*operation)(), const string& name);
+    void handle_operation(int (*operation)(), const std::string& name, int step);
 
 	/**
 	* @brief Prints the options menu.

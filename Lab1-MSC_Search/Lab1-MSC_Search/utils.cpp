@@ -3,6 +3,9 @@
 using namespace std;
 
 namespace Utils {
+    bool has_generated_text = false;
+    bool has_generated_search_words = false;
+
     /**
      * @brief Ensures the filename has a .txt extension.
      *
@@ -17,14 +20,46 @@ namespace Utils {
     }
 
     /**
-     * @brief Handles an operation and prints an error if it fails.
+     * @brief Handles an operation and prints an error if it fails or if dependencies are not met.
      *
-     * @param operation Function to call (must return int).
-     * @param name Description of the operation (for error message).
+     * Also updates internal flags to track completed steps for dependency management.
+     *
+     * @param operation Function pointer to the operation to execute (must return int).
+     * @param name Description of the operation (used in logs and error messages).
+     * @param step Step identifier for the operation (used to enforce required execution order).
+     *             - 2: Random Text Generation
+     *             - 3: Search Words Generation (requires step 2)
+     *             - 4: Naive Search (requires steps 2 and 3)
      */
-    void handle_operation(int (*operation)(), const string& name) {
+    void handle_operation(int (*operation)(), const string& name, int step) {
+        // Dependency checks
+        if (step == 3 && !has_generated_text) {
+            cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+            return;
+        }
+        if (step == 4) {
+            if (!has_generated_text) {
+                cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+                return;
+            }
+            if (!has_generated_search_words) {
+                cerr << "Error: Cannot run \"" << name << "\" before generating search words (Option 3).\n";
+                return;
+            }
+        }
+
+        // Run operation
         if (operation() != 0) {
             cerr << "Error: " << name << " failed.\n";
+            return;
+        }
+
+        // Set flags based on operation step
+        if (step == 2) {
+            has_generated_text = true;
+        }
+        else if (step == 3) {
+            has_generated_search_words = true;
         }
     }
 
