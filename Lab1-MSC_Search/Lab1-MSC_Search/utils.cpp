@@ -1,6 +1,7 @@
 #include "utils.hpp"
 
 using namespace std;
+using namespace Config;
 
 namespace Utils {
 
@@ -22,54 +23,51 @@ namespace Utils {
     }
 
     /**
-     * @brief Handles an operation and prints an error if it fails or if dependencies are not met.
+     * @brief Validates whether the selected choice can be executed
+     *        based on the current progress flags and dependencies.
      *
-     * Also updates internal flags to track completed steps for dependency management.
+     * If dependencies are not met, error messages are printed and execution is halted.
      *
-     * @param operation Function pointer to the operation to execute (must return int).
-     * @param name Description of the operation (used in logs and error messages).
-     * @param step Step identifier for the operation (used to enforce required execution order).
-     *             - 2: Random Text Generation
-     *             - 3: Search Words Generation (requires step 2)
-     *             - 4: Naive Search (requires steps 2 and 3)
+     * @param choice Integer representing the operation choice to validate.
      */
-    void handle_operation(int (*operation)(), const string& name, int step) {
-        // Dependency checks
-        if (Config::VALIDATE_SELECTIONS) {
-            if (step == 3 && !has_generated_text) {
-                cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+    static void validate_choice(int choice) {
+        if (VALIDATE_SELECTIONS) {
+            if (choice == 3 && !has_generated_text) {
+                cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating text (Option 2).\n";
                 return;
             }
-            if (step == 4) {
+            if (choice == 4) {
                 if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating text (Option 2).\n";
                     return;
                 }
                 if (!has_generated_search_words) {
-                    cerr << "Error: Cannot run \"" << name << "\" before generating search words (Option 3).\n";
+                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating search words (Option 3).\n";
                     return;
                 }
             }
-            if (step == 5) {
+            if (choice == 5) {
                 if (!has_generated_msc) {
-                    cerr << "Error: Cannot run \"" << name << "\" before creating MSC (Option 1).\n";
+                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before creating MSC (Option 1).\n";
                     return;
                 }
                 if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating text (Option 2).\n";
                     return;
                 }
             }
         }
+    }
 
-        // Run operation
-        if (operation() != 0) {
-            cerr << "Error: " << name << " failed.\n";
-            return;
-        }
-
-        // Set flags based on operation step
-        switch (step) {
+    /**
+     * @brief Updates internal state flags based on the completed operation choice.
+     *
+     * Tracks which key steps have been successfully executed for dependency management.
+     *
+     * @param choice Integer representing the operation choice that just completed.
+     */
+    static void update_flags(int choice) {
+        switch (choice) {
         case 1:
             has_generated_msc = true;
             break;
@@ -80,6 +78,35 @@ namespace Utils {
             has_generated_search_words = true;
             break;
         }
+    }
+
+    /**
+     * @brief Handles an operation, enforcing dependencies and tracking progress flags.
+     *
+     * Validates if the operation can run based on prior completed steps,
+     * executes the operation, logs errors if any, and updates internal flags.
+     *
+     * @param operation Function pointer to the operation to execute (must return int).
+     * @param choice Integer representing the selected operation choice.
+     *               Valid choices:
+     *               - 1: MSC Creation
+     *               - 2: Random Text Generation
+     *               - 3: Search Words Generation (requires step 2)
+     *               - 4: Naive Search (requires steps 2 and 3)
+     *               - 5: Filters Map Creation (requires steps 1 and 2)
+     */
+    void handle_operation(int (*operation)(), int choice) {
+        // Dependency checks
+        validate_choice(choice);
+
+        // Run operation
+        if (operation() != 0) {
+            cerr << "Error: " << choices[choice] << " failed.\n";
+            return;
+        }
+
+        // Set flags based on operation step
+        update_flags(choice);
     }
 
     /**
@@ -207,7 +234,7 @@ namespace Utils {
     void print_progress(int current, int total) {
         if (total <= 0) return;
 
-        const int update_interval = max(1, total / Config::PROGRESS_UPDATES_COUNT);
+        const int update_interval = max(1, total / PROGRESS_UPDATES_COUNT);
         if (current % update_interval != 0 && current != total - 1) return;
 
         double percent = (static_cast<double>(current + 1) / total) * 100.0;

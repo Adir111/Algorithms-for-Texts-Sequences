@@ -19,18 +19,21 @@ namespace Utils {
     extern bool has_generated_search_words;
 
     /**
-     * @brief Handles an operation and prints an error if it fails or if dependencies are not met.
+     * @brief Handles an operation, enforcing dependencies and tracking progress flags.
      *
-     * Also updates internal flags to track completed steps for dependency management.
+     * Validates if the operation can run based on prior completed steps,
+     * executes the operation, logs errors if any, and updates internal flags.
      *
      * @param operation Function pointer to the operation to execute (must return int).
-     * @param name Description of the operation (used in logs and error messages).
-     * @param step Step identifier for the operation (used to enforce required execution order).
-     *             - 2: Random Text Generation
-     *             - 3: Search Words Generation (requires step 2)
-     *             - 4: Naive Search (requires steps 2 and 3)
+     * @param choice Integer representing the selected operation choice.
+     *               Valid choices:
+     *               - 1: MSC Creation
+     *               - 2: Random Text Generation
+     *               - 3: Search Words Generation (requires step 2)
+     *               - 4: Naive Search (requires steps 2 and 3)
+     *               - 5: Filters Map Creation (requires steps 1 and 2)
      */
-    void handle_operation(int (*operation)(), const std::string& name, int step);
+    void handle_operation(int (*operation)(), int step);
 
 	/**
 	 * @brief Prints the options menu.
@@ -44,7 +47,7 @@ namespace Utils {
      * @param filename The target filename
      * @return int 0 on success, -1 on failure
      */
-    int save_to_file(const vector<string>& lines, const string& filename);
+    int save_to_file(const vector<std::string>& lines, const std::string& filename);
     
     /**
      * @brief Reads full text content from a file.
@@ -52,7 +55,7 @@ namespace Utils {
      * @param filename The input filename
      * @return string The content read from the file, or empty on failure
      */
-    string read_text_from_file(const string& filename);
+    std::string read_text_from_file(const std::string& filename);
 
     /**
      * @brief Reads a newline-separated list of strings from a file.
@@ -60,7 +63,7 @@ namespace Utils {
      * @param filename Name of the file to read.
      * @return vector<string> List of lines (words).
      */
-    vector<string> read_lines_from_file(const string& filename);
+    vector<std::string> read_lines_from_file(const std::string& filename);
 
     /**
      * @brief Converts WordMatch results into printable lines for file saving.
@@ -68,7 +71,7 @@ namespace Utils {
      * @param matches Vector of WordMatch objects
      * @return vector<string> Formatted output lines
      */
-    vector<string> convert_matches_to_lines(const vector<WordMatch>& matches);
+    vector<std::string> convert_matches_to_lines(const vector<WordMatch>& matches);
 
     /**
      * @brief Prints progress as a percentage with two decimal digits, in-place on the same line.

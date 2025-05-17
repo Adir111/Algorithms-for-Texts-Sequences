@@ -11,7 +11,7 @@ using std::vector;
  * @brief Represents a word and its positions in text.
  */
 struct WordMatch {
-    string word;
+    std::string word;
     vector<int> positions; // index of positions start from 1 (not 0)
 };
 
