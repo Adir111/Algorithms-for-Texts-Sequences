@@ -69,7 +69,7 @@ namespace FiltersMap {
                     filters_map[filtered_word].positions.push_back(position);
                 }
             }
-            print_progress(i + 1, static_cast<int>(total_iterations));
+            print_progress(static_cast<int>(i + 1), static_cast<int>(total_iterations));
         }
 
         // === Phase 5: Convert to output lines and save to output file ===

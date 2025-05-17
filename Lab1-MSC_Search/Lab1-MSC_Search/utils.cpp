@@ -1,6 +1,7 @@
 #include "utils.hpp"
 
 using namespace std;
+using namespace chrono;
 using namespace Config;
 
 namespace Utils {
@@ -20,6 +21,11 @@ namespace Utils {
             return filename + ".txt";
         }
         return filename;
+    }
+
+    static bool should_set_time(int choice) {
+        if (choice == 5) return true;
+        return false;
     }
 
     /**
@@ -99,11 +105,24 @@ namespace Utils {
         // Dependency checks
         validate_choice(choice);
 
+        // Timer start if choice is one of the searches
+        bool should_set_timer = should_set_time(choice);
+        auto start = (should_set_timer) ? steady_clock::now() : steady_clock::time_point();
+
         // Run operation
         if (operation() != 0) {
             cerr << "Error: " << choices[choice] << " failed.\n";
             return;
         }
+
+        // Timer end and report duration if choice is 5
+        if (should_set_timer) {
+            auto end = steady_clock::now();
+            duration<double> elapsed_seconds = end - start;
+            cout << "[Utils] Operation \"" << choices[choice] << "\" completed in "
+                << fixed << setprecision(2) << elapsed_seconds.count() << " seconds.\n";
+        }
+
 
         // Set flags based on operation step
         update_flags(choice);
@@ -117,8 +136,8 @@ namespace Utils {
         cout << "  1. Run MSC Creation\n";
         cout << "  2. Generate Random Text\n";
         cout << "  3. Generate Search Words\n";
-        cout << "  4. Run Naive Search\n";
-        cout << "  5. Create Filters Map\n";
+        cout << "  4. Create Filters Map\n";
+        cout << "  5. Run Naive Search\n";
         cout << "  6. Option 6 (Coming soon)\n";
         cout << "Enter your choice: ";
     }

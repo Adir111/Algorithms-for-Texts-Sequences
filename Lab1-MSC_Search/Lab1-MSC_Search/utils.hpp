@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <chrono>
 
 #include "WordMatch.hpp"
 #include "config.hpp"

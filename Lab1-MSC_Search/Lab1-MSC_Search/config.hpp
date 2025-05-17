@@ -21,12 +21,12 @@ namespace Config {
     const bool VALIDATE_SELECTIONS = true; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
-    const vector<std::string> choices = {
+    const std::vector<std::string> choices = {
         "MSC Creation",
         "Random Text Generation",
         "Search Words Generation",
-        "Naive Search",
-        "Filters Map"
+        "Filters Map",
+        "Naive Search"
     };
 
     /**

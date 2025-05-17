@@ -21,19 +21,19 @@ int main() {
 
         switch (choice) {
         case 1:
-            handle_operation(msc_creation, "MSC Creation", choice);
+            handle_operation(msc_creation, choice);
             break;
         case 2:
-            handle_operation(generate_text_and_save, "Random Text Generation", choice);
+            handle_operation(generate_text_and_save, choice);
             break;
         case 3:
-            handle_operation(generate_search_words, "Search Words Generation", choice);
+            handle_operation(generate_search_words, choice);
             break;
         case 4:
-            handle_operation(perform_naive_search, "Naive Search", choice);
+            handle_operation(create_filters_map, choice);
             break;
         case 5:
-            handle_operation(create_filters_map, "Filters Map", choice);
+            handle_operation(perform_naive_search, choice);
             break;
         case 6:
             cout << "Option " << choice << " not implemented yet.\n";
