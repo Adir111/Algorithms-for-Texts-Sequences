@@ -134,6 +134,7 @@
     <ClInclude Include="naive_search.hpp" />
     <ClInclude Include="random_text.hpp" />
     <ClInclude Include="search_words_generator.hpp" />
+    <ClInclude Include="standard_msc_search.hpp" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="WordMatch.hpp" />
   </ItemGroup>
@@ -145,6 +146,7 @@
     <ClCompile Include="naive_search.cpp" />
     <ClCompile Include="random_text.cpp" />
     <ClCompile Include="search_words_generator.cpp" />
+    <ClCompile Include="standard_msc_search.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>

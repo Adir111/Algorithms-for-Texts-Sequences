@@ -42,6 +42,9 @@
     <ClInclude Include="create_filters_map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="standard_msc_search.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp">
@@ -66,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="create_filters_map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="standard_msc_search.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

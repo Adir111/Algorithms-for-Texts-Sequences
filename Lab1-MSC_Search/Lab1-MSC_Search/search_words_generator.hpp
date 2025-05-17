@@ -23,4 +23,4 @@ namespace SearchWordsGenerator {
     int generate_search_words();
 }
 
-#endif // SEARCH_WORDS_GENERATOR_HPP
+#endif

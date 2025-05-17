@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <unordered_map>
 #include <vector>
 #include <string>
 #include <chrono>
@@ -14,7 +15,7 @@
 #include "config.hpp"
 
 namespace Utils {
-    
+
     extern bool has_generated_msc;
     extern bool has_generated_text;
     extern bool has_generated_search_words;
@@ -36,10 +37,10 @@ namespace Utils {
      */
     void handle_operation(int (*operation)(), int step);
 
-	/**
-	 * @brief Prints the options menu.
-	 */
-	void print_menu();
+    /**
+     * @brief Prints the options menu.
+     */
+    void print_menu();
 
     /**
      * @brief Saves a list of lines to a text file.
@@ -49,7 +50,7 @@ namespace Utils {
      * @return int 0 on success, -1 on failure
      */
     int save_to_file(const vector<std::string>& lines, const std::string& filename);
-    
+
     /**
      * @brief Reads full text content from a file.
      *
@@ -82,7 +83,14 @@ namespace Utils {
      * @param total Total number of iterations (must be > 0).
      */
     void print_progress(int current, int total);
-    
-    }
+
+    /**
+     * @brief Loads filters map from a file into an unordered_map.
+     *
+     * @param filename Path to the filters map file
+     * @return unordered_map<string, vector<int>> map of filtered words to positions
+     */
+     std::unordered_map<std::string, vector<int>> load_filters_map(const std::string& filename);
+};
 
 #endif

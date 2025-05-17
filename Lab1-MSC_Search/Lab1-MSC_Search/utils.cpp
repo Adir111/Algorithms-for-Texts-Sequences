@@ -153,8 +153,8 @@ namespace Utils {
      */
     void print_menu() {
         cout << "\nWhat would you like to do? (0 for exit)\n";
-        for (size_t i = 0; i < Config::OPTIONS.size(); ++i) {
-            cout << "  " << (i + 1) << ". Run " << Config::OPTIONS[i] << "\n";
+        for (size_t i = 0; i < OPTIONS.size(); ++i) {
+            cout << "  " << (i + 1) << ". Run " << OPTIONS[i] << "\n";
         }
         cout << "Enter your choice: ";
     }
@@ -208,11 +208,14 @@ namespace Utils {
         string final_filename = ensure_txt_extension(filename);
 
         // Open file for reading
-        ifstream in(final_filename);
+        ifstream in(final_filename, ios::binary);
         if (!in) {
             cerr << "[Utils] Failed to open file: " << final_filename << '\n';
             return "";
         }
+
+        in.clear(); // reset any flags
+        in.seekg(0, ios::beg); // ensure we're at the start
 
         // Read full content into buffer
         stringstream buffer;
@@ -297,5 +300,56 @@ namespace Utils {
 
         // Print newline only when reaching 100%
         if (current == total - 1) cout << endl;
+    }
+
+    /**
+     * @brief Loads filters map from a file into an unordered_map.
+     *
+     * Each line is expected to start with a key (string) followed by integer positions.
+     *
+     * @param filename Path to the filters map file
+     * @return unordered_map<string, vector<int>> map of filtered words to positions
+     */
+    unordered_map<string, vector<int>> load_filters_map(const string& filename) {
+        unordered_map<string, vector<int>> filters_map;
+
+        string final_filename = filename;
+        if (filename.size() < 4 || filename.substr(filename.size() - 4) != ".txt") {
+            final_filename += ".txt";
+        }
+
+        ifstream in(final_filename);
+        if (!in) {
+            cerr << "[Utils] Failed to open file: " << final_filename << '\n';
+            return filters_map;
+        }
+
+        string line;
+        int line_count = 0;
+        // Read line by line
+        while (getline(in, line)) {
+            if (line.empty()) continue;
+
+            istringstream iss(line);
+            string key;
+            iss >> key;
+            vector<int> positions;
+            int pos;
+            while (iss >> pos) {
+                positions.push_back(pos);
+            }
+
+            if (!key.empty()) {
+                filters_map[key] = positions;
+            }
+
+            ++line_count;
+            if (line_count % 10000 == 0) { // print progress every 10k lines
+                cout << "[Utils] Processed lines: " << line_count << '\n';
+            }
+        }
+
+        cout << "[Utils] Finished reading " << line_count << " lines from " << final_filename << "\n";
+        return filters_map;
     }
 }

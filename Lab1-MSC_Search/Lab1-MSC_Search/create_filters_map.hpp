@@ -21,6 +21,6 @@ namespace FiltersMap {
      * @return int Returns 0 on success, or -1 on failure.
      */
     int create_filters_map();
-}
+    }
 
 #endif

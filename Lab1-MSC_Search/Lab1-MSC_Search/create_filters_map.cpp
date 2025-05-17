@@ -12,7 +12,8 @@ namespace FiltersMap {
      *        sliding windows in the text, building a map of filtered words to positions,
      *        and saving the result to a file.
      *
-     * @return int Returns 0 on success, or -1 on failure.
+     * @return unordered_map<string, WordMatch> The constructed filters map.
+     *         Returns an empty map on failure.
      */
     int create_filters_map() {
         cout << "[FiltersMapBuilder] Starting filters map creation...\n";

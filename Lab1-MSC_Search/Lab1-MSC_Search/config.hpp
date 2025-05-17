@@ -18,17 +18,20 @@ namespace Config {
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
     const std::string FILTERS_MAP = "filters_map"; // Output file for filters map
     const std::string NAIVE_SEARCH_OUTPUT_FILENAME = "naive_output"; // Output file for naive search algorithm
+    const std::string STANDARD_MCS_OUTPUT_FILENAME = "standard_output"; // Output file for standard MCS search algorithm
     const bool VALIDATE_SELECTIONS = false; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
-    const std::vector<int> TIMER_CHOICES = { 5, 6, 7 };
+    const std::vector<int> TIMER_CHOICES = { 5, 6, 7 }; // Used to indicate which choices should have timer
     const std::vector<std::string> OPTIONS = {
         "MSC Creation",
         "Random Text Creation",
         "Search Words Creation",
         "Filters Map Creation",
-        "Naive Search"
-    };
+        "Naive Search",
+        "Standard MCS Search",
+        "Positional MCS Search"
+    }; // List of choices for user
 
     /**
      * @brief Prints the program configuration
