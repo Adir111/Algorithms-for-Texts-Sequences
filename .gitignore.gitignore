@@ -1,0 +1,47 @@
+# Ignore Visual Studio temporary files, build results, and user-specific files
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+x64/
+Debug/
+Release/
+build/
+
+# Visual Studio folders
+.vs/
+
+# CMake build folders (optional, if you use CMake)
+CMakeFiles/
+CMakeCache.txt
+
+# Object files and other intermediates
+*.obj
+*.pdb
+*.idb
+*.ipch
+*.aps
+*.ncb
+*.log
+*.tlog
+*.lastbuildstate
+
+# Auto-generated files
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+
+# Others
+*.cache
+*.ilk
+*.exe
+*.dll
+*.lib
+*.app
+*.iobj
+*.ipdb
