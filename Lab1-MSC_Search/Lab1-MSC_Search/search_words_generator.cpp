@@ -1,0 +1,43 @@
+#include "search_words_generator.hpp"
+
+using namespace std;
+using namespace Config;
+using namespace Utils;
+
+namespace SearchWordsGenerator {
+
+    int generate_search_words() {
+        // Step 1: Load full text content
+        string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
+        if (text.empty()) {
+            cerr << "[Generate] Failed to load text content.\n";
+            return -1;
+        }
+
+        // Step 2: Validate text is long enough
+        size_t requiredLength = SEARCH_WORD_SIZE * NUMBER_OF_SEARCH_WORDS;
+        if (text.length() < requiredLength) {
+            cerr << "[Generate] Text is too short for generating required search words.\n";
+            return -1;
+        }
+
+        // Step 3: Generate vector of search words
+        vector<string> searchWords;
+        size_t i = 0;
+        while (searchWords.size() < NUMBER_OF_SEARCH_WORDS && i + SEARCH_WORD_SIZE <= text.length()) {
+            string word = text.substr(i, SEARCH_WORD_SIZE);
+            searchWords.push_back(word);
+            i += SEARCH_WORD_SIZE;  // Move to next non-overlapping segment
+        }
+
+        // Step 4: Save the vector to a file
+        if (save_to_file(searchWords, SEARCH_WORDS_FILENAME) != 0) {
+            cerr << "[Generate] Failed to save search words.\n";
+            return -1;
+        }
+
+        cout << "[Generate] Successfully generated and saved " << searchWords.size() << " search words.\n";
+        return 0;
+    }
+
+}
