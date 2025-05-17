@@ -7,6 +7,7 @@
 #include "utils.hpp"
 
 namespace SearchWordsGenerator {
+
     /**
      * @brief Generates a list of search words from the random text file
      *        and saves them into a target file.

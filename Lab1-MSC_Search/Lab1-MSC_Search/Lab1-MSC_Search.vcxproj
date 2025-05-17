@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="config.hpp" />
+    <ClInclude Include="create_filters_map.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="mcs_creation.hpp" />
     <ClInclude Include="naive_search.hpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="create_filters_map.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mcs_creation.cpp" />
     <ClCompile Include="naive_search.cpp" />

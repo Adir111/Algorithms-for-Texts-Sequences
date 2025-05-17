@@ -5,6 +5,7 @@ using namespace Config;
 using namespace Utils;
 
 namespace NaiveSearch {
+
     /**
      * @brief Finds all starting positions of a word in the given text using naive search.
      *
@@ -81,7 +82,7 @@ namespace NaiveSearch {
         vector<string> lines = convert_matches_to_lines(result);
         int status = save_to_file(lines, NAIVE_SEARCH_OUTPUT_FILENAME);
 
-        cout << "[NaiveSearch] Search complete.\n";
+        if (status == 0) cout << "[NaiveSearch] Search complete.\n";
         return status;
     }
 }

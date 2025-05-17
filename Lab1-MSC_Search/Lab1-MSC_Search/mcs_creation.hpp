@@ -11,6 +11,7 @@
 #include "utils.hpp"
 
 namespace MCS {
+
     /**
      * @brief Generates a minimal set of binary strings (MSC) based on configuration parameters.
      *

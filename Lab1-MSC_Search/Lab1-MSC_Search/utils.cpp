@@ -5,6 +5,7 @@ using namespace std;
 namespace Utils {
     bool has_generated_text = false;
     bool has_generated_search_words = false;
+    bool has_generated_msc = false;
 
     /**
      * @brief Ensures the filename has a .txt extension.
@@ -47,6 +48,16 @@ namespace Utils {
                 return;
             }
         }
+        if (step == 5) {
+            if (!has_generated_msc) {
+                cerr << "Error: Cannot run \"" << name << "\" before creating MSC (Option 1).\n";
+                return;
+            }
+            if (!has_generated_text) {
+                cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+                return;
+            }
+        }
 
         // Run operation
         if (operation() != 0) {
@@ -55,11 +66,16 @@ namespace Utils {
         }
 
         // Set flags based on operation step
-        if (step == 2) {
+        switch (step) {
+        case 1:
+            has_generated_msc = true;
+            break;
+        case 2:
             has_generated_text = true;
-        }
-        else if (step == 3) {
+            break;
+        case 3:
             has_generated_search_words = true;
+            break;
         }
     }
 
@@ -72,7 +88,7 @@ namespace Utils {
         cout << "  2. Generate Random Text\n";
         cout << "  3. Generate Search Words\n";
         cout << "  4. Run Naive Search\n";
-        cout << "  5. Option 5 (Coming soon)\n";
+        cout << "  5. Create Filters Map\n";
         cout << "  6. Option 6 (Coming soon)\n";
         cout << "Enter your choice: ";
     }

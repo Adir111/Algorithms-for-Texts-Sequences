@@ -5,6 +5,7 @@ using namespace Utils;
 using namespace std;
 
 namespace MCS {
+
     /**
      * @brief Generates a minimal set of binary strings (MSC) based on configuration parameters.
      *

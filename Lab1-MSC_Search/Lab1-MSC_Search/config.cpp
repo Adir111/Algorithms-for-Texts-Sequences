@@ -3,21 +3,23 @@
 using namespace std;
 
 namespace Config {
+
     /**
      * @brief Prints the program configuration
      */
     void print_config() {
         cout << "================ Program Configuration ================\n";
-        cout << "Text size                   : " << TEXT_SIZE << "\n";
-        cout << "Number of Search Words      : " << NUMBER_OF_SEARCH_WORDS << "\n";
-        cout << "Y-Letter                    : " << Y_LETTER << "\n";
-        cout << "Search_Word_Size (pattern)  : " << SEARCH_WORD_SIZE << "\n";
-        cout << "Minimal_Matches (min hits)  : " << MINIMAL_MATCHES << "\n";
-        cout << "Filter_Amount_Of_Matches    : " << FILTER_AMOUNT_OF_MATCHES << "\n";
-        cout << "MSC_Output_FileName         : " << MSC_OUTPUT_FILENAME << "\n";
-        cout << "Text_Output_Filename        : " << RANDOM_GENERATED_TEXT_FILENAME << "\n";
-        cout << "Search_Words_Filename       : " << SEARCH_WORDS_FILENAME << "\n";
-        cout << "Naive_Output_Filename       : " << NAIVE_SEARCH_OUTPUT_FILENAME << "\n";
+        cout << "Text size                    : " << TEXT_SIZE << "\n";
+        cout << "Number of Search Words       : " << NUMBER_OF_SEARCH_WORDS << "\n";
+        cout << "Y-Letter                     : " << Y_LETTER << "\n";
+        cout << "Search_Word_Size (pattern)   : " << SEARCH_WORD_SIZE << "\n";
+        cout << "Minimal_Matches (min hits)   : " << MINIMAL_MATCHES << "\n";
+        cout << "Filter_Amount_Of_Matches     : " << FILTER_AMOUNT_OF_MATCHES << "\n";
+        cout << "MSC_Output_FileName          : " << MSC_OUTPUT_FILENAME << "\n";
+        cout << "Text_Output_Filename         : " << RANDOM_GENERATED_TEXT_FILENAME << "\n";
+        cout << "Search_Words_Filename        : " << SEARCH_WORDS_FILENAME << "\n";
+        cout << "Naive_Output_Filename        : " << NAIVE_SEARCH_OUTPUT_FILENAME << "\n";
+        cout << "Filters_Map_Output_Filename  : " << FILTERS_MAP << "\n";
         cout << "=======================================================\n\n";
     }
 

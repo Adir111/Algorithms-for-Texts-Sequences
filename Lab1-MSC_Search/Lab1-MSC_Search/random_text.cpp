@@ -5,6 +5,7 @@ using namespace Config;
 using namespace Utils;
 
 namespace RandomText {
+
     /**
      * @brief Generates random text of size TEXT_SIZE using chars from Y_LETTER to 'z',
      * and saves it to RANDOM_GENERATED_TEXT_FILENAME.txt.

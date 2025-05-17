@@ -10,6 +10,7 @@
 #include "WordMatch.hpp"
 
 namespace NaiveSearch {
+
     /**
      * @brief Performs naive search for all given words and writes results to file.
      *
