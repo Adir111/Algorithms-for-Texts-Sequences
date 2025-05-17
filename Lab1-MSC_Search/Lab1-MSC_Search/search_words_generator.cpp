@@ -19,17 +19,18 @@ namespace SearchWordsGenerator {
      * @return int 0 on success, -1 on failure
      */
     int generate_search_words() {
+        cout << "[SearchWords] Generating " << NUMBER_OF_SEARCH_WORDS << " Search Words...\n";
         // Step 1: Load full text content
         string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
         if (text.empty()) {
-            cerr << "[Generate] Failed to load text content.\n";
+            cerr << "[SearchWords] Failed to load text content.\n";
             return -1;
         }
 
         // Step 2: Validate text is long enough
         size_t requiredLength = SEARCH_WORD_SIZE * NUMBER_OF_SEARCH_WORDS;
         if (text.length() < requiredLength) {
-            cerr << "[Generate] Text is too short for generating required search words.\n";
+            cerr << "[SearchWords] Text is too short for generating required search words.\n";
             return -1;
         }
 
@@ -48,13 +49,9 @@ namespace SearchWordsGenerator {
         cout << '\n';
 
         // Step 4: Save the vector to a file
-        if (save_to_file(searchWords, SEARCH_WORDS_FILENAME) != 0) {
-            cerr << "[Generate] Failed to save search words.\n";
-            return -1;
-        }
-
-        cout << "[Generate] Successfully generated and saved " << searchWords.size() << " search words.\n";
-        return 0;
+        int status = save_to_file(searchWords, SEARCH_WORDS_FILENAME);
+        if (status == 0) cout << "[SearchWords] Successfully generated and saved " << searchWords.size() << " search words.\n";
+        return status;
     }
 
 }

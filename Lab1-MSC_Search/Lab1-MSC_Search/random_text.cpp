@@ -28,10 +28,10 @@ namespace RandomText {
             print_progress(i, TEXT_SIZE);
         }
 
-        cout << "[RandomText] Text generation complete.\n";
-
         // === Save to file ===
-        return save_to_file({ text }, RANDOM_GENERATED_TEXT_FILENAME);
+        int status = save_to_file({ text }, RANDOM_GENERATED_TEXT_FILENAME);
+        if (status == 0) cout << "[RandomText] Text generation complete.\n";
+        return status;
     }
 
 }

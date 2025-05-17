@@ -16,8 +16,8 @@ namespace Config {
     const std::string MSC_OUTPUT_FILENAME = "msc_output"; // Output file for msc
     const std::string RANDOM_GENERATED_TEXT_FILENAME = "generated_text"; // Output file for random generated text
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
-    const std::string NAIVE_SEARCH_OUTPUT_FILENAME = "naive_output"; // Output file for naive search algorithm
     const std::string FILTERS_MAP = "filters_map"; // Output file for filters map
+    const std::string NAIVE_SEARCH_OUTPUT_FILENAME = "naive_output"; // Output file for naive search algorithm
     const bool VALIDATE_SELECTIONS = true; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop

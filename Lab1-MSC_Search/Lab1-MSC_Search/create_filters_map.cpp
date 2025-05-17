@@ -79,7 +79,7 @@ namespace FiltersMap {
         }
 
         vector<string> lines = convert_matches_to_lines(results);
-        int status = save_to_file(lines, NAIVE_SEARCH_OUTPUT_FILENAME);
+        int status = save_to_file(lines, FILTERS_MAP);
 
         if (status == 0) cout << "[FiltersMapBuilder] Filters map creation complete.\n";
         return status;

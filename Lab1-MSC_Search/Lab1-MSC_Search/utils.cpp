@@ -226,17 +226,22 @@ namespace Utils {
         cout << "[Utils] Converting matches to output lines...\n";
 
         vector<string> lines;
+        size_t total = matches.size();
 
         // Process each match object
-        for (const auto& match : matches) {
+        for (size_t i = 0; i < total; ++i) {
+            const auto& match = matches[i];
             string line = "Word: " + match.word + "\nPositions: ";
 
             // Concatenate all positions into a line
-            for (size_t i = 0; i < match.positions.size(); ++i) {
-                line += to_string(match.positions[i]);
-                if (i != match.positions.size() - 1) line += ", ";
+            for (size_t j = 0; j < match.positions.size(); ++j) {
+                line += to_string(match.positions[j]);
+                if (j != match.positions.size() - 1) line += ", ";
             }
+
             lines.push_back(line + "\n");
+
+            print_progress(static_cast<int>(i), static_cast<int>(total));
         }
 
         cout << "[Utils] Conversion complete. Total words: " << matches.size() << '\n';

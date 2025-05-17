@@ -95,9 +95,9 @@ namespace MCS {
             print_progress(processed, total_combinations);
         }
 
-        cout << "\n[MSC] MSC created with " << msc.size() << " entries.\n";
-
         // === Step 3: Save result to output file ===
-        return save_to_file(msc, MSC_OUTPUT_FILENAME);
+        int status = save_to_file(msc, MSC_OUTPUT_FILENAME);
+        if (status == 0) cout << "\n[MSC] MSC created with " << msc.size() << " entries.\n";
+        return status;
     }
 }
