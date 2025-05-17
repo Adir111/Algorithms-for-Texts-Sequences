@@ -33,8 +33,9 @@ namespace FiltersMap {
         // === Phase 2: Iterate through text ===
         unordered_map<string, WordMatch> filters_map;
         size_t text_len = text.length();
+        size_t total_iterations = text_len - SEARCH_WORD_SIZE + 1;
 
-        for (size_t i = 0; i + SEARCH_WORD_SIZE <= text_len; ++i) {
+        for (size_t i = 0; i < total_iterations; ++i) {
             string window = text.substr(i, SEARCH_WORD_SIZE);
 
             // === Phase 3: Create words from the window using each filter ===
@@ -68,6 +69,7 @@ namespace FiltersMap {
                     filters_map[filtered_word].positions.push_back(position);
                 }
             }
+            print_progress(i + 1, static_cast<int>(total_iterations));
         }
 
         // === Phase 5: Convert to output lines and save to output file ===

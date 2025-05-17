@@ -7,6 +7,7 @@ using namespace MCS;
 using namespace RandomText;
 using namespace NaiveSearch;
 using namespace SearchWordsGenerator;
+using namespace FiltersMap;
 
 int main() {
     int choice;
@@ -32,7 +33,7 @@ int main() {
             handle_operation(perform_naive_search, "Naive Search", choice);
             break;
         case 5:
-            cout << "Option " << choice << " not implemented yet.\n";
+            handle_operation(create_filters_map, "Filters Map", choice);
             break;
         case 6:
             cout << "Option " << choice << " not implemented yet.\n";

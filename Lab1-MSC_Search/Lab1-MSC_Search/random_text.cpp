@@ -25,6 +25,7 @@ namespace RandomText {
 
         for (int i = 0; i < TEXT_SIZE; ++i) {
             text += static_cast<char>(dist(gen));
+            print_progress(i, TEXT_SIZE);
         }
 
         cout << "[RandomText] Text generation complete.\n";

@@ -3,9 +3,10 @@
 using namespace std;
 
 namespace Utils {
+
+    bool has_generated_msc = false;
     bool has_generated_text = false;
     bool has_generated_search_words = false;
-    bool has_generated_msc = false;
 
     /**
      * @brief Ensures the filename has a .txt extension.
@@ -34,28 +35,30 @@ namespace Utils {
      */
     void handle_operation(int (*operation)(), const string& name, int step) {
         // Dependency checks
-        if (step == 3 && !has_generated_text) {
-            cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
-            return;
-        }
-        if (step == 4) {
-            if (!has_generated_text) {
+        if (Config::VALIDATE_SELECTIONS) {
+            if (step == 3 && !has_generated_text) {
                 cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
                 return;
             }
-            if (!has_generated_search_words) {
-                cerr << "Error: Cannot run \"" << name << "\" before generating search words (Option 3).\n";
-                return;
+            if (step == 4) {
+                if (!has_generated_text) {
+                    cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+                    return;
+                }
+                if (!has_generated_search_words) {
+                    cerr << "Error: Cannot run \"" << name << "\" before generating search words (Option 3).\n";
+                    return;
+                }
             }
-        }
-        if (step == 5) {
-            if (!has_generated_msc) {
-                cerr << "Error: Cannot run \"" << name << "\" before creating MSC (Option 1).\n";
-                return;
-            }
-            if (!has_generated_text) {
-                cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
-                return;
+            if (step == 5) {
+                if (!has_generated_msc) {
+                    cerr << "Error: Cannot run \"" << name << "\" before creating MSC (Option 1).\n";
+                    return;
+                }
+                if (!has_generated_text) {
+                    cerr << "Error: Cannot run \"" << name << "\" before generating text (Option 2).\n";
+                    return;
+                }
             }
         }
 
@@ -80,8 +83,8 @@ namespace Utils {
     }
 
     /**
-    * @brief Prints the options menu.
-    */
+     * @brief Prints the options menu.
+     */
     void print_menu() {
         cout << "\nWhat would you like to do? (0 for exit)\n";
         cout << "  1. Run MSC Creation\n";
@@ -192,5 +195,29 @@ namespace Utils {
 
         cout << "[Utils] Conversion complete. Total words: " << matches.size() << '\n';
         return lines;
+    }
+
+    /**
+     * @brief Prints progress as a percentage with two decimal digits, in-place on the same line.
+     *        Progress updates are throttled to avoid excessive output.
+     *
+     * @param current Current iteration (0-based).
+     * @param total Total number of iterations (must be > 0).
+     */
+    void print_progress(int current, int total) {
+        if (total <= 0) return;
+
+        const int update_interval = max(1, total / Config::PROGRESS_UPDATES_COUNT);
+        if (current % update_interval != 0 && current != total - 1) return;
+
+        double percent = (static_cast<double>(current + 1) / total) * 100.0;
+        if (percent > 100.0) percent = 100.0;
+
+        ostringstream out;
+        out << "\r[Progress] " << fixed << setprecision(2) << percent << "%";
+        cout << out.str() << flush;
+
+        // Print newline only when reaching 100%
+        if (current == total - 1) cout << endl;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Config {
 
+    const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
     const int TEXT_SIZE = 10000000; // 10 million characters
     const int NUMBER_OF_SEARCH_WORDS = 10000; // Number of search words (taken from the start of the text)
     const int SEARCH_WORD_SIZE = 21; // size of word for search
@@ -18,6 +19,7 @@ namespace Config {
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
     const std::string NAIVE_SEARCH_OUTPUT_FILENAME = "naive_output"; // Output file for naive search algorithm
     const std::string FILTERS_MAP = "filters_map"; // Output file for filters map
+    const bool VALIDATE_SELECTIONS = true; // Flag indicating if should validate user selections
 
     /**
      * @brief Prints the program configuration

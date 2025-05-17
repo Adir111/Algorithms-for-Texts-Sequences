@@ -36,11 +36,16 @@ namespace SearchWordsGenerator {
         // Step 3: Generate vector of search words
         vector<string> searchWords;
         size_t i = 0;
+
         while (searchWords.size() < NUMBER_OF_SEARCH_WORDS && i + SEARCH_WORD_SIZE <= text.length()) {
             string word = text.substr(i, SEARCH_WORD_SIZE);
             searchWords.push_back(word);
             i += SEARCH_WORD_SIZE;  // Move to next non-overlapping segment
+
+            print_progress(static_cast<int>(searchWords.size()), static_cast<int>(NUMBER_OF_SEARCH_WORDS));
         }
+        print_progress(static_cast<int>(NUMBER_OF_SEARCH_WORDS), static_cast<int>(NUMBER_OF_SEARCH_WORDS));
+        cout << '\n';
 
         // Step 4: Save the vector to a file
         if (save_to_file(searchWords, SEARCH_WORDS_FILENAME) != 0) {

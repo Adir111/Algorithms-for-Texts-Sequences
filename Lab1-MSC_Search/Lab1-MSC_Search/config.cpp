@@ -20,6 +20,7 @@ namespace Config {
         cout << "Search_Words_Filename        : " << SEARCH_WORDS_FILENAME << "\n";
         cout << "Naive_Output_Filename        : " << NAIVE_SEARCH_OUTPUT_FILENAME << "\n";
         cout << "Filters_Map_Output_Filename  : " << FILTERS_MAP << "\n";
+        cout << "Validate_Selections          : " << VALIDATE_SELECTIONS << "\n";
         cout << "=======================================================\n\n";
     }
 

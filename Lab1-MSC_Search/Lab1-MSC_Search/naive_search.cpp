@@ -66,12 +66,17 @@ namespace NaiveSearch {
         unordered_map<string, WordMatch> unique_matches;
 
         // Search each unique word only once
+        size_t total_words = search_words.size();
+        size_t processed = 0;
+
         for (const auto& word : search_words) {
             if (unique_matches.find(word) == unique_matches.end()) {
                 vector<int> positions = find_word_positions(text, word);
                 unique_matches[word] = WordMatch{ word, positions };
             }
+            print_progress(static_cast<int>(++processed), static_cast<int>(total_words));
         }
+        cout << "\r[NaiveSearch] Progress: 100%\n";
 
         // Prepare output lines
         vector<WordMatch> result;

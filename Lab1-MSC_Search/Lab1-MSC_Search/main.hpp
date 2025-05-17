@@ -9,5 +9,6 @@
 #include "random_text.hpp"
 #include "naive_search.hpp"
 #include "search_words_generator.hpp"
+#include "create_filters_map.hpp"
 
 #endif

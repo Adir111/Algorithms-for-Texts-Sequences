@@ -35,6 +35,9 @@ namespace MCS {
 
         cout << "[MSC] Generating binary strings with " << required_ones << " ones...\n";
 
+        const int total_range = static_cast<int>(end - start);
+        int generated_count = 0;
+
         // === Step 1: Generate all combinations with required number of 1 ===
         for (unsigned long long i = start; i < end; ++i) {
             bitset<SEARCH_WORD_SIZE> bits(i);  // Convert to fixed-size binary string
@@ -42,12 +45,18 @@ namespace MCS {
             if (count(binary.begin(), binary.end(), '1') == required_ones) {
                 all_valid_combinations.push_back(binary);
             }
+
+            ++generated_count;
+            print_progress(generated_count, total_range);
         }
 
         cout << "[MSC] " << all_valid_combinations.size() << " valid combinations generated.\n";
         cout << "[MSC] Creating minimal set cover...\n";
 
         // === Step 2: Create the minimal set cover (MSC) ===
+        const int total_combinations = static_cast<int>(all_valid_combinations.size());
+        int processed = 0;
+
         for (const auto& value : all_valid_combinations) {
             bool skip = false;
 
@@ -58,7 +67,11 @@ namespace MCS {
                     break;
                 }
             }
-            if (skip) continue;
+            if (skip) {
+                ++processed;
+                print_progress(processed, total_combinations);
+                continue;
+            }
 
             // Truncate after FILTER_AMOUNT_OF_MATCHES ones
             string truncated;
@@ -77,9 +90,12 @@ namespace MCS {
             if (find(msc.begin(), msc.end(), truncated) == msc.end()) {
                 msc.push_back(truncated);
             }
+
+            ++processed;
+            print_progress(processed, total_combinations);
         }
 
-        cout << "[MSC] MSC created with " << msc.size() << " entries.\n";
+        cout << "\n[MSC] MSC created with " << msc.size() << " entries.\n";
 
         // === Step 3: Save result to output file ===
         return save_to_file(msc, MSC_OUTPUT_FILENAME);
