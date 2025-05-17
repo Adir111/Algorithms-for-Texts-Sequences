@@ -23,10 +23,16 @@ namespace Utils {
         return filename;
     }
 
-    static bool should_set_time(int choice) {
-        if (choice == 5) return true;
-        return false;
+    /**
+     * @brief Determines whether a timer should be set for the given choice.
+     *
+     * @param choice The user choice.
+     * @return true if a timer is needed, false otherwise.
+     */
+    static bool should_set_timer(int choice) {
+        return find(TIMER_CHOICES.begin(), TIMER_CHOICES.end(), choice) != TIMER_CHOICES.end();
     }
+
 
     /**
      * @brief Validates whether the selected choice can be executed
@@ -38,29 +44,33 @@ namespace Utils {
      */
     static void validate_choice(int choice) {
         if (VALIDATE_SELECTIONS) {
-            if (choice == 3 && !has_generated_text) {
-                cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating text (Option 2).\n";
-                return;
-            }
-            if (choice == 4) {
+            switch (choice) {
+            case 3:
                 if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating text (Option 2).\n";
+                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating text (Option 2).\n";
+                    return;
+                }
+                break;
+            case 4:
+                if (!has_generated_text) {
+                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating text (Option 2).\n";
                     return;
                 }
                 if (!has_generated_search_words) {
-                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating search words (Option 3).\n";
+                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating search words (Option 3).\n";
                     return;
                 }
-            }
-            if (choice == 5) {
+                break;
+            case 5:
                 if (!has_generated_msc) {
-                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before creating MSC (Option 1).\n";
+                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before creating MSC (Option 1).\n";
                     return;
                 }
                 if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << choices[choice] << "\" before generating text (Option 2).\n";
+                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating text (Option 2).\n";
                     return;
                 }
+                break;
             }
         }
     }
@@ -87,6 +97,17 @@ namespace Utils {
     }
 
     /**
+     * @brief Checks whether a file already exists on disk.
+     *
+     * @param filename The name of the file to check (with or without path).
+     * @return true if the file exists, false otherwise.
+     */
+    static bool file_exists(const std::string& filename) {
+        std::ifstream infile(filename);
+        return infile.good();
+    }
+
+    /**
      * @brief Handles an operation, enforcing dependencies and tracking progress flags.
      *
      * Validates if the operation can run based on prior completed steps,
@@ -106,20 +127,19 @@ namespace Utils {
         validate_choice(choice);
 
         // Timer start if choice is one of the searches
-        bool should_set_timer = should_set_time(choice);
-        auto start = (should_set_timer) ? steady_clock::now() : steady_clock::time_point();
+        auto start = (should_set_timer(choice)) ? steady_clock::now() : steady_clock::time_point();
 
         // Run operation
         if (operation() != 0) {
-            cerr << "Error: " << choices[choice] << " failed.\n";
+            cerr << "Error: " << OPTIONS[choice] << " failed.\n";
             return;
         }
 
         // Timer end and report duration if choice is 5
-        if (should_set_timer) {
+        if (should_set_timer(choice)) {
             auto end = steady_clock::now();
             duration<double> elapsed_seconds = end - start;
-            cout << "[Utils] Operation \"" << choices[choice] << "\" completed in "
+            cout << "[Utils] Operation \"" << OPTIONS[choice] << "\" completed in "
                 << fixed << setprecision(2) << elapsed_seconds.count() << " seconds.\n";
         }
 
@@ -133,12 +153,9 @@ namespace Utils {
      */
     void print_menu() {
         cout << "\nWhat would you like to do? (0 for exit)\n";
-        cout << "  1. Run MSC Creation\n";
-        cout << "  2. Generate Random Text\n";
-        cout << "  3. Generate Search Words\n";
-        cout << "  4. Create Filters Map\n";
-        cout << "  5. Run Naive Search\n";
-        cout << "  6. Option 6 (Coming soon)\n";
+        for (size_t i = 0; i < Config::OPTIONS.size(); ++i) {
+            cout << "  " << (i + 1) << ". Run " << Config::OPTIONS[i] << "\n";
+        }
         cout << "Enter your choice: ";
     }
 
@@ -154,6 +171,16 @@ namespace Utils {
         string final_filename = ensure_txt_extension(filename);
         cout << "[Utils] Saving to file: " << final_filename << "\n";
 
+        if (file_exists(final_filename)) {
+            cout << "[Utils] File already exists. Overwrite? (y/n): ";
+            char choice;
+            cin >> choice;
+            if (choice != 'y' && choice != 'Y') {
+                cout << "[Utils] Save cancelled by user.\n";
+                return -2;
+            }
+        }
+        
         // Open file for writing
         ofstream out(final_filename);
         if (!out) {
