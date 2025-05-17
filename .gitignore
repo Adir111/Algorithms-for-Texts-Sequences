@@ -1,7 +1,4 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/Lab1-MSC_Search/.vs/Lab1-MSC_Search
+﻿/Lab1-MSC_Search/.vs/Lab1-MSC_Search
 /Lab1-MSC_Search/x64/Debug
 /Lab1-MSC_Search/Lab1-MSC_Search/x64/Debug
+/Lab1-MSC_Search/Lab1-MSC_Search/*.txt
