@@ -11,6 +11,7 @@
 #include "WordMatch.hpp"
 #include "utils.hpp"
 #include "config.hpp"
+#include "create_filters_map.hpp"
 
 namespace StandardMSCSearch {
 

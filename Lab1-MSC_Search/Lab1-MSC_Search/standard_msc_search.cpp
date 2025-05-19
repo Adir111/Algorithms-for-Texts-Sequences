@@ -3,6 +3,7 @@
 using namespace std;
 using namespace Utils;
 using namespace Config;
+using namespace FiltersMap;
 
 namespace StandardMSCSearch {
     /**
@@ -33,9 +34,8 @@ namespace StandardMSCSearch {
         }
 
         // Load filters map
-        unordered_map<string, vector<int>> filters_map = load_filters_map(FILTERS_MAP);
         if (filters_map.empty()) {
-            cerr << "[StandardMSCSearch] Failed to load filters map.\n";
+            cerr << "[StandardMSCSearch] Failed to load filters map - its empty.\n";
             return -1;
         }
 

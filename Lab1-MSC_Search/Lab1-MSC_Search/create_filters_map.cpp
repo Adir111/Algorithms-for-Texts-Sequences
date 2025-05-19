@@ -33,6 +33,7 @@ namespace FiltersMap {
 
         // === Phase 2: Iterate through text ===
         unordered_map<string, WordMatch> filters_map;
+        filters_map.clear();
         size_t text_len = text.length();
         size_t total_iterations = text_len - SEARCH_WORD_SIZE + 1;
 

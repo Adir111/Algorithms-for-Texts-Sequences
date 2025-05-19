@@ -11,6 +11,7 @@
 #include <iostream>
 
 namespace FiltersMap {
+    extern std::unordered_map<std::string, WordMatch> filters_map;
 
     /**
      * @brief Creates a map of filtered words and their positions in the input text.
