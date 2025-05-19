@@ -69,10 +69,10 @@ namespace StandardMSCSearch {
                             });
 
                         if (found == results.end()) {
-                            results.push_back(WordMatch{ filtered_word, it->second });
+                            results.push_back(it->second);
                         }
                         else {
-                            for (int pos : it->second) {
+                            for (int pos : it->second.positions) {
                                 if (find(found->positions.begin(), found->positions.end(), pos) == found->positions.end()) {
                                     found->positions.push_back(pos);
                                 }
