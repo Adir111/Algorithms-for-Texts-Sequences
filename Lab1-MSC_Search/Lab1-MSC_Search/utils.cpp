@@ -269,10 +269,14 @@ namespace Utils {
             const auto& match = matches[i];
             string line = "Word: " + match.word + "\nPositions: ";
 
-            // Concatenate all positions into a line
-            for (size_t j = 0; j < match.positions.size(); ++j) {
-                line += to_string(match.positions[j]);
-                if (j != match.positions.size() - 1) line += ", ";
+
+            // Iterate over the set of positions
+            size_t count = 0;
+            for (auto pos : match.positions) {
+                line += to_string(pos);
+                if (++count < match.positions.size()) {
+                    line += ", ";
+                }
             }
 
             lines.push_back(line + "\n");
@@ -373,7 +377,7 @@ namespace Utils {
         if (!insert_result.second) {
             WordMatch updated = *insert_result.first;
             result_set.erase(insert_result.first);
-            updated.positions.push_back(pos);
+            updated.positions.insert(pos);
             result_set.insert(updated);
         }
     }

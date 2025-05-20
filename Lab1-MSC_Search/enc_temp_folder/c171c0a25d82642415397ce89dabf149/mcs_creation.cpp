@@ -5,39 +5,6 @@ using namespace Utils;
 using namespace std;
 
 namespace MCS {
-    /**
-     * @brief Generates all valid binary strings of given bit length
-     *        that start with '1' and contain exactly `required_ones` number of '1's.
-     *
-     * @param total_bits The total number of bits in each binary string.
-     * @param required_ones The exact number of '1's each binary string must contain.
-     * @return std::vector<std::string> A vector of valid binary strings.
-     *
-     * The function avoids unsigned underflow and shows progress while generating.
-     */
-    vector<string> generate_valid_combinations(int total_bits, int required_ones) {
-        vector<string> combinations;
-        const unsigned long long start = 1ULL << (total_bits - 1);  // 100...0
-        const unsigned long long end = (1ULL << total_bits);        // one past 111...1
-
-        const int total_range = static_cast<int>(end - start);
-        int generated_count = 0;
-
-        for (unsigned long long i = end - 1; i >= start; --i) {
-            bitset<SEARCH_WORD_SIZE> bits(i);  // Convert to fixed-size binary string
-            string binary = bits.to_string();
-            if (count(binary.begin(), binary.end(), '1') == required_ones) {
-                combinations.push_back(binary);
-            }
-
-            ++generated_count;
-            print_progress(generated_count, total_range);
-
-            if (i == start) break;  // avoid infinite loop on unsigned underflow
-        }
-
-        return combinations;
-    }
 
     /**
      * @brief Generates a minimal set of binary strings (MSC) based on configuration parameters.
@@ -62,8 +29,26 @@ namespace MCS {
         const int total_bits = SEARCH_WORD_SIZE;
         const int required_ones = MINIMAL_MATCHES;
 
+        // Range: binary strings starting with 1 (e.g., 100...0) up to (but not including) the next power of 2
+        const unsigned long long start = 1ULL << (total_bits - 1);  // 100...0
+        const unsigned long long end = (1ULL << total_bits);      // one past 111...1
+
         cout << "[MSC] Generating binary strings with " << required_ones << " ones...\n";
-        all_valid_combinations = generate_valid_combinations(total_bits, required_ones);
+
+        const int total_range = static_cast<int>(end - start);
+        int generated_count = 0;
+
+        // === Step 1: Generate all combinations with required number of 1 ===
+        for (unsigned long long i = end - 1; i >= start; --i) {
+            bitset<SEARCH_WORD_SIZE> bits(i);  // Convert to fixed-size binary string
+            string binary = bits.to_string();  // Get string representation
+            if (count(binary.begin(), binary.end(), '1') == required_ones) {
+                all_valid_combinations.push_back(binary);
+            }
+
+            ++generated_count;
+            print_progress(generated_count, total_range);
+        }
 
         cout << "[MSC] " << all_valid_combinations.size() << " valid combinations generated.\n";
         cout << "[MSC] Creating minimal set cover...\n";

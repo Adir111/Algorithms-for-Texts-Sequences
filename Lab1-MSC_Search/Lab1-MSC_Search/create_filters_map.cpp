@@ -68,14 +68,14 @@ namespace FiltersMap {
                     filters_map[filtered_word] = WordMatch{ filtered_word, {position} };
                 }
                 else {
-                    filters_map[filtered_word].positions.push_back(position);
+                    filters_map[filtered_word].positions.insert(position);
                 }
             }
             print_progress(static_cast<int>(i + 1), static_cast<int>(total_iterations));
         }
 
         // === Phase 5: Convert to output lines and save to output file ===
-        cout << "Should also save to file: " << STANDARD_MCS_OUTPUT_FILENAME << "?\n";
+        cout << "Should also save to file: " << STANDARD_MCS_OUTPUT_FILENAME << "? (y/n)\n";
         int status = 0;
         char choice;
         cin >> choice;
