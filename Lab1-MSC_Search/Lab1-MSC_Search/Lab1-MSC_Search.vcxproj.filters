@@ -42,7 +42,10 @@
     <ClInclude Include="create_filters_map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="standard_msc_search.hpp">
+    <ClInclude Include="standard_mcs_search.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="positional_mcs_creation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="standard_msc_search.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="positional_mcs_creation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
-#ifndef MSC_HPP
-#define MSC_HPP
+#ifndef MCS_HPP
+#define MCS_HPP
 
 #include <vector>
 #include <string>
@@ -22,14 +22,26 @@ namespace MCS {
      *
      * The function avoids unsigned underflow and shows progress while generating.
      */
-    vector<string> generate_valid_combinations(int total_bits, int required_ones);
+    vector<string> generate_valid_combinations();
 
     /**
-     * @brief Generates a minimal set of binary strings (MSC) based on configuration parameters.
+     * @brief Checks whether a filter exists as a substring in a given combination.
+     *
+     * This function looks for an occurrence of `filter` within `combination`, treating
+     * filter positions with null characters (0) as wildcards that match any character.
+     *
+     * @param filter The binary filter string (may include null characters as wildcards).
+     * @param combination The binary string to check for inclusion of the filter.
+     * @return true if the filter is found in the combination, false otherwise.
+     */
+    bool is_filter_in_combination(const string& filter, const string& combination);
+
+    /**
+     * @brief Generates a minimal set of binary strings (MCS) based on configuration parameters.
      *
      * @return int Returns 0 on success, -1 if saving the file failed.
      */
-	int msc_creation();
+	int mcs_creation();
 }
 
 #endif

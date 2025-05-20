@@ -6,7 +6,7 @@ using namespace Config;
 
 namespace Utils {
 
-    bool has_generated_msc = false;
+    bool has_generated_mcs = false;
     bool has_generated_text = false;
     bool has_generated_search_words = false;
 
@@ -62,8 +62,8 @@ namespace Utils {
                 }
                 break;
             case 5:
-                if (!has_generated_msc) {
-                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before creating MSC (Option 1).\n";
+                if (!has_generated_mcs) {
+                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before creating MCS (Option 1).\n";
                     return;
                 }
                 if (!has_generated_text) {
@@ -85,7 +85,7 @@ namespace Utils {
     static void update_flags(int choice) {
         switch (choice) {
         case 1:
-            has_generated_msc = true;
+            has_generated_mcs = true;
             break;
         case 2:
             has_generated_text = true;
@@ -116,7 +116,7 @@ namespace Utils {
      * @param operation Function pointer to the operation to execute (must return int).
      * @param choice Integer representing the selected operation choice.
      *               Valid choices:
-     *               - 1: MSC Creation
+     *               - 1: MCS Creation
      *               - 2: Random Text Generation
      *               - 3: Search Words Generation (requires step 2)
      *               - 4: Naive Search (requires steps 2 and 3)

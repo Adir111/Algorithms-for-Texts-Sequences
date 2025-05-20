@@ -1,23 +1,23 @@
-#include "standard_msc_search.hpp"
+#include "standard_mcs_search.hpp"
 
 using namespace std;
 using namespace Utils;
 using namespace Config;
 using namespace FiltersMap;
 
-namespace StandardMSCSearch {
+namespace StandardMCSSearch {
     /**
-     * @brief Executes a standard MSC search using filters and a filters map.
+     * @brief Executes a standard MCS search using filters and a filters map.
      *
-     * The method processes each search word and applies all MSC filters by sliding them across the word.
+     * The method processes each search word and applies all MCS filters by sliding them across the word.
      * For every valid application of a filter, it generates a masked word (with '_' in unmatched positions),
      * looks it up in the filters map, and collects matching positions.
      * Finally, the results are saved to the file defined in the config under STANDARD_MCS_OUTPUT_FILENAME.
      *
      * @return 0 on success, -1 on failure (e.g., failed to load files or save output)
      */
-    int run_standard_msc_search() {
-        cout << "[StandardMSCSearch] Starting usual MSC search...\n";
+    int run_standard_mcs_search() {
+        cout << "[StandardMCSSearch] Starting usual MCS search...\n";
 
         // Load Text
         string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
@@ -27,22 +27,22 @@ namespace StandardMSCSearch {
         }
 
         // Load MCS filters
-        vector<string> msc_filters = read_lines_from_file(MSC_OUTPUT_FILENAME);
-        if (msc_filters.empty()) {
-            cerr << "[StandardMSCSearch] Failed to load MCS filters - its empty or doens`t exist.\n";
+        vector<string> mcs_filters = read_lines_from_file(STANDARD_MCS_OUTPUT_FILENAME);
+        if (mcs_filters.empty()) {
+            cerr << "[StandardMCSSearch] Failed to load MCS filters - its empty or doens`t exist.\n";
             return -1;
         }
 
         // Load search words
         vector<string> search_words = read_lines_from_file(SEARCH_WORDS_FILENAME);
         if (search_words.empty()) {
-            cerr << "[StandardMSCSearch] Failed to load search words.\n";
+            cerr << "[StandardMCSSearch] Failed to load search words.\n";
             return -1;
         }
 
         // Load filters map
         if (filters_map.empty()) {
-            cerr << "[StandardMSCSearch] Failed to load filters map - its empty.\n";
+            cerr << "[StandardMCSSearch] Failed to load filters map - its empty.\n";
             return -1;
         }
 
@@ -56,7 +56,7 @@ namespace StandardMSCSearch {
             const size_t search_word_length = word.length();
 
             // --- Try all filters on this word ---
-            for (const string& filter : msc_filters) {
+            for (const string& filter : mcs_filters) {
                 size_t filter_length = filter.length();
 
                 // --- Slide the filter over the word ---
@@ -100,7 +100,7 @@ namespace StandardMSCSearch {
 
         // Save results to file
         int status = save_to_file(output_lines, STANDARD_MCS_OUTPUT_FILENAME);
-        if (status == 0) cout << "[StandardMSCSearch] MSC search complete. Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
+        if (status == 0) cout << "[StandardMCSSearch] MCS search complete. Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
         return status;
     }
 }

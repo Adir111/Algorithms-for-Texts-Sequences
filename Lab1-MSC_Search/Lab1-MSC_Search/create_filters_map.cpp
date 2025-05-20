@@ -26,7 +26,7 @@ namespace FiltersMap {
             return -1;
         }
 
-        vector<string> filters = read_lines_from_file(MSC_OUTPUT_FILENAME);
+        vector<string> filters = read_lines_from_file(STANDARD_MCS_OUTPUT_FILENAME);
         if (filters.empty()) {
             cerr << "[FiltersMapBuilder] Failed to load MCS filters.\n";
             return -1;

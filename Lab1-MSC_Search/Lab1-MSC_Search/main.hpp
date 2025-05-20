@@ -10,6 +10,7 @@
 #include "naive_search.hpp"
 #include "search_words_generator.hpp"
 #include "create_filters_map.hpp"
-#include "standard_msc_search.hpp"
+#include "standard_mcs_search.hpp"
+#include "positional_mcs_creation.hpp"
 
 #endif

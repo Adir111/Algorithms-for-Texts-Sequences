@@ -13,18 +13,21 @@ namespace Config {
     const int MINIMAL_MATCHES = 15; // minimal amount of matches
     const int FILTER_AMOUNT_OF_MATCHES = 4; // amount of matches in the filter
     const char Y_LETTER = 'k'; // the start char the text is being generated from (up to z)
-    const std::string MSC_OUTPUT_FILENAME = "msc_output"; // Output file for msc
+    const std::string STANDARD_MCS_OUTPUT_FILENAME = "standard_mcs_output"; // Output file for mcs
+    const std::string POSITIONAL_MCS_OUTPUT_FILENAME = "positional_mcs_output"; // Output file for positional mcs
     const std::string RANDOM_GENERATED_TEXT_FILENAME = "generated_text"; // Output file for random generated text
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
     const std::string FILTERS_MAP = "filters_map"; // Output file for filters map
     const std::string NAIVE_SEARCH_OUTPUT_FILENAME = "naive_output"; // Output file for naive search algorithm
-    const std::string STANDARD_MCS_OUTPUT_FILENAME = "standard_msc_output"; // Output file for standard MCS search algorithm
+    const std::string STANDARD_MCS_SEARCH_OUTPUT_FILENAME = "standard_mcs_search_output"; // Output file for standard MCS search algorithm
+    const std::string POSITIONAL_MCS_SEARCH_OUTPUT_FILENAME = "positional_mcs_search_output"; // Output file for positional MCS search algorithm
     const bool VALIDATE_SELECTIONS = false; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
     const std::vector<int> TIMER_CHOICES = { 5, 6, 7 }; // Used to indicate which choices should have timer
     const std::vector<std::string> OPTIONS = {
-        "MSC Creation",
+        "MCS Creation",
+        "Positional MCS Creation",
         "Random Text Creation",
         "Search Words Creation",
         "Filters Map Creation",

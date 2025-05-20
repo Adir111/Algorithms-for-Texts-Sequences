@@ -1,8 +1,8 @@
 #include "mcs_creation.hpp"
 
+using namespace std;
 using namespace Config;
 using namespace Utils;
-using namespace std;
 
 namespace MCS {
     /**
@@ -15,7 +15,10 @@ namespace MCS {
      *
      * The function avoids unsigned underflow and shows progress while generating.
      */
-    vector<string> generate_valid_combinations(int total_bits, int required_ones) {
+    vector<string> generate_valid_combinations() {
+        const int total_bits = SEARCH_WORD_SIZE;
+        const int required_ones = MINIMAL_MATCHES;
+
         vector<string> combinations;
         const unsigned long long start = 1ULL << (total_bits - 1);  // 100...0
         const unsigned long long end = (1ULL << total_bits);        // one past 111...1
@@ -40,7 +43,35 @@ namespace MCS {
     }
 
     /**
-     * @brief Generates a minimal set of binary strings (MSC) based on configuration parameters.
+     * @brief Checks whether a filter exists as a substring in a given combination.
+     *
+     * This function looks for an occurrence of `filter` within `combination`, treating
+     * filter positions with null characters (0) as wildcards that match any character.
+     *
+     * @param filter The binary filter string (may include null characters as wildcards).
+     * @param combination The binary string to check for inclusion of the filter.
+     * @return true if the filter is found in the combination, false otherwise.
+     */
+    bool is_filter_in_combination(const string& filter, const string& combination) {
+        for (size_t i = 0; i <= combination.size() - filter.size(); ++i) {
+            if (filter[0] == combination[i]) {
+                bool match = true;
+                for (size_t j = 1; j < filter.size(); j++) {
+                    if (filter[j] == 0)
+                        continue;
+                    if (filter[j] != combination[i + j]) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @brief Generates a minimal set of binary strings (MCS) based on configuration parameters.
      *
      * @return int Returns 0 on success, -1 if saving the file failed.
      * 
@@ -48,39 +79,34 @@ namespace MCS {
      * 1. Generates all binary strings of size SEARCH_WORD_SIZE that:
      *    - Start with '1'
      *    - Contain exactly MINIMAL_MATCHES number of '1's
-     * 2. Filters and processes these strings into a minimal set (MSC) by:
-     *    - Skipping strings that already contain an existing MSC entry as a substring
+     * 2. Filters and processes these strings into a minimal set (MCS) by:
+     *    - Skipping strings that already contain an existing MCS entry as a substring
      *    - Truncating strings after FILTER_AMOUNT_OF_MATCHES ones
-     *    - Avoiding duplicates in the MSC
-     * 3. Saves the MSC to a file defined in MSC_OUTPUT_FILENAME
+     *    - Avoiding duplicates in the MCS
+     * 3. Saves the MCS to a file defined in MCS_OUTPUT_FILENAME
      */
-    int msc_creation() {
-        cout << "[MSC] Starting MSC creation process...\n";
-        vector<string> all_valid_combinations;
-        vector<string> msc;
+    int mcs_creation() {
+        cout << "[MCS] Starting MCS creation process...\n";
+        vector<string> mcs;
 
-        const int total_bits = SEARCH_WORD_SIZE;
-        const int required_ones = MINIMAL_MATCHES;
+        // === Step 1: Generate all combinations with exact number of ones ===
+        cout << "[MCS] Generating binary strings with " << MINIMAL_MATCHES << " ones...\n";
+        vector<string> all_valid_combinations = generate_valid_combinations();
 
-        cout << "[MSC] Generating binary strings with " << required_ones << " ones...\n";
-        all_valid_combinations = generate_valid_combinations(total_bits, required_ones);
-
-        cout << "[MSC] " << all_valid_combinations.size() << " valid combinations generated.\n";
-        cout << "[MSC] Creating minimal set cover...\n";
-
-        // === Step 2: Create the minimal set cover (MSC) ===
         const int total_combinations = static_cast<int>(all_valid_combinations.size());
+        cout << "[MCS] " << total_combinations << " valid combinations generated.\n";
+        cout << "[MCS] Creating minimal set cover...\n";
+
+        // === Step 2: Create the minimal set cover (MCS) ===
         int processed = 0;
 
         for (const auto& value : all_valid_combinations) {
             bool skip = false;
 
-            // Skip if current value contains an existing MSC entry as substring
-            for (const auto& existing : msc) {
-                if (value.find(existing) != string::npos) {
-                    skip = true;
-                    break;
-                }
+            // Skip if current value contains an existing MCS entry as substring
+            for (const auto& existing : mcs) {
+                skip = is_filter_in_combination(existing, value);
+                if (skip) break;
             }
             if (skip) {
                 ++processed;
@@ -101,9 +127,9 @@ namespace MCS {
                 }
             }
 
-            // Add to MSC if not already present
-            if (find(msc.begin(), msc.end(), truncated) == msc.end()) {
-                msc.push_back(truncated);
+            // Add to MCS if not already present
+            if (find(mcs.begin(), mcs.end(), truncated) == mcs.end()) {
+                mcs.push_back(truncated);
             }
 
             ++processed;
@@ -111,8 +137,8 @@ namespace MCS {
         }
 
         // === Step 3: Save result to output file ===
-        int status = save_to_file(msc, MSC_OUTPUT_FILENAME);
-        if (status == 0) cout << "\n[MSC] MSC created with " << msc.size() << " entries.\n";
+        int status = save_to_file(mcs, STANDARD_MCS_OUTPUT_FILENAME);
+        if (status == 0) cout << "\n[MCS] MCS created with " << mcs.size() << " entries.\n";
         return status;
     }
 }

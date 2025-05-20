@@ -17,7 +17,7 @@
 
 namespace Utils {
 
-    extern bool has_generated_msc;
+    extern bool has_generated_mcs;
     extern bool has_generated_text;
     extern bool has_generated_search_words;
 
@@ -30,7 +30,7 @@ namespace Utils {
      * @param operation Function pointer to the operation to execute (must return int).
      * @param choice Integer representing the selected operation choice.
      *               Valid choices:
-     *               - 1: MSC Creation
+     *               - 1: MCS Creation
      *               - 2: Random Text Generation
      *               - 3: Search Words Generation (requires step 2)
      *               - 4: Naive Search (requires steps 2 and 3)

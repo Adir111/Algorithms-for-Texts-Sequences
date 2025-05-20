@@ -132,9 +132,10 @@
     <ClInclude Include="main.hpp" />
     <ClInclude Include="mcs_creation.hpp" />
     <ClInclude Include="naive_search.hpp" />
+    <ClInclude Include="positional_mcs_creation.hpp" />
     <ClInclude Include="random_text.hpp" />
     <ClInclude Include="search_words_generator.hpp" />
-    <ClInclude Include="standard_msc_search.hpp" />
+    <ClInclude Include="standard_mcs_search.hpp" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="WordMatch.hpp" />
   </ItemGroup>
@@ -144,6 +145,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mcs_creation.cpp" />
     <ClCompile Include="naive_search.cpp" />
+    <ClCompile Include="positional_mcs_creation.cpp" />
     <ClCompile Include="random_text.cpp" />
     <ClCompile Include="search_words_generator.cpp" />
     <ClCompile Include="standard_msc_search.cpp" />
