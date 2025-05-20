@@ -11,8 +11,12 @@ using std::vector;
  * @brief Represents a word and its positions in text.
  */
 struct WordMatch {
-    std::string word;
-    vector<int> positions; // index of positions start from 1 (not 0)
+    string word;
+    vector<size_t> positions;
+
+    bool operator<(const WordMatch& other) const {
+        return word < other.word;
+    }
 };
 
 #endif

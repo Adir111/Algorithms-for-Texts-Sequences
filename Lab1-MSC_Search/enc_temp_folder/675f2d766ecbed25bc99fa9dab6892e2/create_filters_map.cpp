@@ -75,19 +75,13 @@ namespace FiltersMap {
         }
 
         // === Phase 5: Convert to output lines and save to output file ===
-        cout << "Should also save to file: " << STANDARD_MCS_OUTPUT_FILENAME << "?\n";
-        int status = 0;
-        char choice;
-        cin >> choice;
-        if (choice == 'y') {
-            vector<WordMatch> results;
-            for (const auto& pair : filters_map) {
-                results.push_back(pair.second);
-            }
-
-            vector<string> lines = convert_matches_to_lines(results);
-            status = save_to_file(lines, FILTERS_MAP);
+        vector<WordMatch> results;
+        for (const auto& pair : filters_map) {
+            results.push_back(pair.second);
         }
+
+        vector<string> lines = convert_matches_to_lines(results);
+        int status = save_to_file(lines, FILTERS_MAP);
 
         if (status == 0) cout << "[FiltersMapBuilder] Filters map creation complete.\n";
         return status;

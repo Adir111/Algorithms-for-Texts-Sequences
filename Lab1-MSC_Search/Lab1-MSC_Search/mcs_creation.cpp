@@ -39,7 +39,7 @@ namespace MCS {
         int generated_count = 0;
 
         // === Step 1: Generate all combinations with required number of 1 ===
-        for (unsigned long long i = start; i < end; ++i) {
+        for (unsigned long long i = end - 1; i >= start; --i) {
             bitset<SEARCH_WORD_SIZE> bits(i);  // Convert to fixed-size binary string
             string binary = bits.to_string();  // Get string representation
             if (count(binary.begin(), binary.end(), '1') == required_ones) {

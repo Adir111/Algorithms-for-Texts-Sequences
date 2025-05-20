@@ -22,14 +22,14 @@ namespace StandardMSCSearch {
         // Load Text
         string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
         if (text.empty()) {
-            cerr << "[FiltersMapBuilder] Failed to load text - its empty or doesn`t exist.\n";
+            cerr << "[FiltersMapBuilder] Failed to load text.\n";
             return -1;
         }
 
         // Load MCS filters
         vector<string> msc_filters = read_lines_from_file(MSC_OUTPUT_FILENAME);
         if (msc_filters.empty()) {
-            cerr << "[StandardMSCSearch] Failed to load MCS filters - its empty or doens`t exist.\n";
+            cerr << "[StandardMSCSearch] Failed to load MCS filters.\n";
             return -1;
         }
 
