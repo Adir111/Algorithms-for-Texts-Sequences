@@ -22,7 +22,7 @@ namespace StandardMCSSearch {
         // Load Text
         string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
         if (text.empty()) {
-            cerr << "[FiltersMapBuilder] Failed to load text - its empty or doesn`t exist.\n";
+            cerr << "[StandardMCSSearch] Failed to load text - its empty or doesn`t exist.\n";
             return -1;
         }
 
