@@ -4,12 +4,13 @@ using namespace std;
 using namespace Config;
 using namespace Utils;
 using namespace MCS;
+using namespace PositionalMCS;
 using namespace RandomText;
-using namespace NaiveSearch;
 using namespace SearchWordsGenerator;
+using namespace NaiveSearch;
 using namespace FiltersMap;
 using namespace StandardMCSSearch;
-using namespace PositionalMCS;
+using namespace PositionalMCSSearch;
 
 int main() {
     int choice;
@@ -44,7 +45,7 @@ int main() {
             handle_operation(run_standard_mcs_search, choice);
             break;
         case 8:
-            cout << "Option " << choice << " not implemented yet.\n";
+            handle_operation(run_positional_mcs_search, choice);
             break;
         case 0:
             cout << "Exiting program. Goodbye!\n";
