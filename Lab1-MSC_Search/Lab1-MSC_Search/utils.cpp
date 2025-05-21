@@ -309,7 +309,7 @@ namespace Utils {
         cout << out.str() << flush;
 
         // Print newline only when reaching 100%
-        if (percent == 100.0) cout << endl;
+        if (percent >= 100.0) cout << endl;
     }
 
     ///** OUT OF USE - unable to read such large file. Saved in global variable instead.

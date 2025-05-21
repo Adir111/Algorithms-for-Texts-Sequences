@@ -74,7 +74,7 @@ namespace PositionalMCS {
             mcs_i_plus_1 = all_mcs[mcs_index];
 
             // == Phase 2.1: Reduction of combinations
-            cout << "[PositionalMCS] Reduction of combinations phase has started.";
+            cout << "[PositionalMCS] Reduction of combinations phase has started.\n";
             int total_combinations = static_cast<int>(all_valid_combinations.size());
             vector<string> reduced_combinations;
 
@@ -91,7 +91,7 @@ namespace PositionalMCS {
                 if (!should_remove)
                     reduced_combinations.push_back(all_valid_combinations[combination_index]);
 
-                print_progress(++processed, total_combinations);
+                print_progress(processed++, total_combinations);
             }
 
             all_valid_combinations = reduced_combinations;
