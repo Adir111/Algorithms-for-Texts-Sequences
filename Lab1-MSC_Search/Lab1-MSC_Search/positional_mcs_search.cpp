@@ -23,7 +23,6 @@ namespace PositionalMCSSearch {
      *
      * @return int Returns 0 on success, or -1 on any failure during input loading or saving.
      */
-
     int run_positional_mcs_search() {
         cout << "[PositionalMCSSearch] Starting usual MCS search...\n";
 
