@@ -75,18 +75,15 @@ namespace StandardMCSSearch {
                     if (it != filters_map.end()) {
                         for (size_t pos : it->second.positions) {
                             size_t position_index = pos - 1;
-                            bool is_match = true;
-                            if (position_index + search_word_length >= TEXT_SIZE) { // to make sure not overflowing the text last pointer
-                                is_match = false;
-                                continue;
-                            }
-                            for (int check_index = 0; check_index < search_word_length; check_index++) { // Check each chars surrounding the index we got in the text.
-                                if (word[check_index] != text[position_index + check_index - sliding_window_index]) {
-                                    is_match = false;
-                                    break;
-                                }
-                            }
-                            if (is_match)
+                            int matches = 0;
+                            if (position_index + search_word_length >= TEXT_SIZE) // to make sure not overflowing the text last pointer
+                                continue; // skip position
+                            
+                            for (int check_index = 0; check_index < search_word_length; check_index++) // Check each chars surrounding the index we got in the text.
+                                if (word[check_index] == text[position_index + check_index - sliding_window_index])
+                                    matches++;
+
+                            if (matches >= MINIMAL_MATCHES)
                                 insert_or_update_match(results, word, pos);
                         }
                     }

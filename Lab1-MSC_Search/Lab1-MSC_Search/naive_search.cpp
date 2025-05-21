@@ -20,18 +20,16 @@ namespace NaiveSearch {
 
         // Loop through the text to find matches
         for (size_t i = 0; i <= text_len - word_len; ++i) {
-            bool match = true;
+            int matches = 0;
 
             // Check each character of the word
             for (size_t j = 0; j < word_len; ++j) {
-                if (text[i + j] != word[j]) {
-                    match = false;
-                    break;
-                }
+                if (text[i + j] != word[j])
+                    matches++;
             }
 
-            // If match is found, store the position (1-based index)
-            if (match) {
+            // If minimum matches are found, store the position (1-based index)
+            if (matches >= MINIMAL_MATCHES) {
                 positions.push_back(i + 1);
             }
         }
