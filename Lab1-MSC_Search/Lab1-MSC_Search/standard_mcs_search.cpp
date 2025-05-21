@@ -18,6 +18,7 @@ namespace StandardMCSSearch {
      */
     int run_standard_mcs_search() {
         cout << "[StandardMCSSearch] Starting usual MCS search...\n";
+        int count_total_finds = 0;
 
         // Load Text
         string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
@@ -83,8 +84,10 @@ namespace StandardMCSSearch {
                                 if (word[check_index] == text[position_index + check_index - sliding_window_index])
                                     matches++;
 
-                            if (matches >= MINIMAL_MATCHES)
+                            if (matches >= MINIMAL_MATCHES) {
                                 insert_or_update_match(results, word, pos);
+                                count_total_finds++;
+                            }
                         }
                     }
                 }
@@ -97,7 +100,7 @@ namespace StandardMCSSearch {
 
         // Save results to file
         int status = save_to_file(output_lines, STANDARD_MCS_OUTPUT_FILENAME);
-        if (status == 0) cout << "[StandardMCSSearch] MCS search complete. Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
+        if (status == 0) cout << "[StandardMCSSearch] MCS search complete with total finds " << count_total_finds << ".Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
         return status;
     }
 }

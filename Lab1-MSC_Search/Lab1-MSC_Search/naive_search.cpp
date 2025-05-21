@@ -46,6 +46,7 @@ namespace NaiveSearch {
      */
     int perform_naive_search() {
         cout << "[NaiveSearch] Starting naive search...\n";
+        int count_total_finds = 0;
 
         // Load the text to search from file
         string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
@@ -71,6 +72,7 @@ namespace NaiveSearch {
             vector<size_t> positions = find_word_positions(text, word);
             for (size_t pos : positions) {
                 insert_or_update_match(unique_matches, word, pos);
+                count_total_finds++;
             }
             print_progress(static_cast<int>(++processed), static_cast<int>(total_words));
         }
@@ -82,7 +84,7 @@ namespace NaiveSearch {
         vector<string> lines = convert_matches_to_lines(results_vector);
         int status = save_to_file(lines, NAIVE_SEARCH_OUTPUT_FILENAME);
 
-        if (status == 0) cout << "[NaiveSearch] Search complete.\n";
+        if (status == 0) cout << "[NaiveSearch] Search complete, found total of " << count_total_finds << ".\n";
         return status;
     }
 }
