@@ -96,14 +96,15 @@ namespace Utils {
     // */
     // std::unordered_map<std::string, vector<int>> load_filters_map(const std::string& filename);
 
-     /**
+    /**
      * @brief Inserts a WordMatch into the set, or updates the existing match with a new position.
      *
      * @param result_set Reference to the set of WordMatch entries.
      * @param word The word being matched.
      * @param pos The position to add to the word's match list.
+     * @return true if the position was added successfully, false if it already existed.
      */
-     void insert_or_update_match(std::set<WordMatch>& result_set, const std::string& word, size_t pos);
+     bool insert_or_update_match(std::set<WordMatch>& result_set, const std::string& word, size_t pos);
 };
 
 #endif

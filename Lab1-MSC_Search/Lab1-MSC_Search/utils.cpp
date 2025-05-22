@@ -372,16 +372,26 @@ namespace Utils {
      * @param result_set Reference to the set of WordMatch entries.
      * @param word The word being matched.
      * @param pos The position to add to the word's match list.
+     * @return true if the position was added successfully, false if it already existed.
      */
-    void insert_or_update_match(set<WordMatch>& result_set, const string& word, size_t pos) {
+    bool insert_or_update_match(set<WordMatch>& result_set, const string& word, size_t pos) {
         WordMatch match{ word, { pos } };
-        pair<set<WordMatch>::iterator, bool> insert_result = result_set.insert(match);
+        auto insert_result = result_set.insert(match);
 
-        if (!insert_result.second) {
+        if (insert_result.second) {
+            // Successfully inserted new match with pos
+            return true;
+        }
+        else {
             WordMatch updated = *insert_result.first;
+            if (updated.positions.count(pos)) {
+                // Position already exists
+                return false;
+            }
             result_set.erase(insert_result.first);
             updated.positions.insert(pos);
             result_set.insert(updated);
+            return true;
         }
     }
 }

@@ -71,8 +71,8 @@ namespace NaiveSearch {
         for (const auto& word : search_words) {
             vector<size_t> positions = find_word_positions(text, word);
             for (size_t pos : positions) {
-                insert_or_update_match(unique_matches, word, pos);
-                count_total_finds++;
+                if (insert_or_update_match(unique_matches, word, pos))
+                    count_total_finds++;
             }
             print_progress(static_cast<int>(++processed), static_cast<int>(total_words));
         }

@@ -74,8 +74,8 @@ namespace StandardMCSSearch {
 
                 // If matches exceed the threshold, insert or update the match
                 if (matches >= MINIMAL_MATCHES) {
-                    insert_or_update_match(results, word, pos);
-                    count_total_finds++;
+                    if (insert_or_update_match(results, word, pos))
+                        count_total_finds++;
                 }
             }
         }
