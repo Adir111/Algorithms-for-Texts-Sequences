@@ -95,7 +95,7 @@ namespace PositionalMCSSearch {
         vector<string> output_lines = convert_matches_to_lines(results_vector);
 
         // Save results to file
-        int status = save_to_file(output_lines, POSITIONAL_MCS_OUTPUT_FILENAME);
+        int status = save_to_file(output_lines, POSITIONAL_MCS_SEARCH_OUTPUT_FILENAME);
         if (status == 0) cout << "[PositionalMCSSearch] MCS search complete with total finds " << count_total_finds << ".Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
         return status;
     }

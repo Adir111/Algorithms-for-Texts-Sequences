@@ -131,7 +131,7 @@ namespace Utils {
 
         // Run operation
         if (operation() != 0) {
-            cerr << "Error: " << OPTIONS[choice] << " failed.\n";
+            cerr << "Error: " << OPTIONS[choice - 1] << " failed.\n";
             return;
         }
 
@@ -139,7 +139,7 @@ namespace Utils {
         if (should_set_timer(choice)) {
             auto end = steady_clock::now();
             duration<double> elapsed_seconds = end - start;
-            cout << "[Utils] Operation \"" << OPTIONS[choice] << "\" completed in "
+            cout << "[Utils] Operation \"" << OPTIONS[choice - 1] << "\" completed in "
                 << fixed << setprecision(2) << elapsed_seconds.count() << " seconds.\n";
         }
 
