@@ -72,7 +72,6 @@ namespace PositionalMCSSearch {
 
 
         // --- Iterate over each search word ---
-        cout << "[PositionalMCSSearch] Start iterating over search words..";
         for (size_t word_index = 0; word_index < total_words; ++word_index) {
             const string& word = search_words[word_index];
             const size_t search_word_length = word.length();
