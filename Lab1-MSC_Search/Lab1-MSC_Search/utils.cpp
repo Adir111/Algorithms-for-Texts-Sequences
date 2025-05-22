@@ -202,16 +202,17 @@ namespace Utils {
      * @brief Reads full text content from a file.
      *
      * @param filename The input filename
+     * @param should_print_log Flag indicating if should print logs.
      * @return string The content read from the file, or empty on failure
      */
-    string read_text_from_file(const string& filename) {
+    string read_text_from_file(const string& filename, bool should_print_log) {
         // Ensure filename ends with .txt
         string final_filename = ensure_txt_extension(filename);
 
         // Open file for reading
         ifstream in(final_filename, ios::binary);
         if (!in) {
-            cerr << "[Utils] Failed to open file: " << final_filename << '\n';
+            if (should_print_log) cerr << "[Utils] Failed to open file: " << final_filename << '\n';
             return "";
         }
 
@@ -230,11 +231,12 @@ namespace Utils {
      * @brief Reads a newline-separated list of strings from a file.
      *
      * @param filename Name of the file to read.
+     * @param should_print_log Flag indicating if should print logs. Default to true.
      * @return vector<string> List of lines (words).
      */
-    vector<string> read_lines_from_file(const string& filename) {
+    vector<string> read_lines_from_file(const string& filename, bool should_print_log) {
         vector<string> lines;
-        string content = read_text_from_file(filename);
+        string content = read_text_from_file(filename, should_print_log);
         if (content.empty()) return lines;
 
         stringstream ss(content);

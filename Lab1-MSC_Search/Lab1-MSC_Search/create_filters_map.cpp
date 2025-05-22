@@ -83,6 +83,7 @@ namespace FiltersMap {
             vector<WordMatch> results;
             size_t total = filters_map.size();
             size_t i = 0;
+            cout << "[FiltersMapBuilder] Organising Data..\n";
             for (const auto& pair : filters_map) {
                 results.push_back(pair.second);
                 print_progress(static_cast<int>(++i), static_cast<int>(total));

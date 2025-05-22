@@ -38,13 +38,13 @@ namespace PositionalMCSSearch {
         int i = 0;
         while (i >= 0) {
             string filename = POSITIONAL_MCS_OUTPUT_FILENAME + "_" + to_string(i);
-            vector<string> curr_mcs_filters = read_lines_from_file(filename);
+            vector<string> curr_mcs_filters = read_lines_from_file(filename, false);
             if (curr_mcs_filters.empty()) {
                 if (i == 0) {
                     cerr << "[PositionalMCSSearch] Failed to load MCS filters - its empty or doens`t exist.\n";
                     return -1;
                 }
-                i = -1;
+                break;
             }
             all_mcs.push_back(curr_mcs_filters);
             i++;

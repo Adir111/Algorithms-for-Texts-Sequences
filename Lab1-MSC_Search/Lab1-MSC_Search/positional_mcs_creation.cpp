@@ -128,7 +128,7 @@ namespace PositionalMCS {
                 }
 
                 // == Phase 2.3: Randomly remove an unprotected filter from mcs[i]
-                cout << "\n[PositionalMCS] Phase 2.3: Removing one unprotected filter...\n";
+                cout << "\n[PositionalMCS] Removing one unprotected filter...\n";
 
                 vector<size_t> unprotected_indices;
                 for (size_t j = 0; j < mcs_filter_protected.size(); ++j) {

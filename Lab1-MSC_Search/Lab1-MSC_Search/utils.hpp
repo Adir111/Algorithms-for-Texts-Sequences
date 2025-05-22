@@ -56,17 +56,19 @@ namespace Utils {
      * @brief Reads full text content from a file.
      *
      * @param filename The input filename
+     * @param should_print_log Flag indicating if should print logs. Default to true.
      * @return string The content read from the file, or empty on failure
      */
-    std::string read_text_from_file(const std::string& filename);
+    std::string read_text_from_file(const std::string& filename, bool should_print_log = true);
 
     /**
      * @brief Reads a newline-separated list of strings from a file.
      *
      * @param filename Name of the file to read.
+     * @param should_print_log Flag indicating if should print logs. Default to true.
      * @return vector<string> List of lines (words).
      */
-    vector<std::string> read_lines_from_file(const std::string& filename);
+    vector<std::string> read_lines_from_file(const std::string& filename, bool should_print_log = true);
 
     /**
      * @brief Converts WordMatch results into printable lines for file saving.
