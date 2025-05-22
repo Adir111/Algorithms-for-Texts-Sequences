@@ -75,17 +75,14 @@ namespace FiltersMap {
         }
 
         // === Phase 5: Convert to output lines and save to output file ===
-        cout << "Should also save to file: " << FILTERS_MAP << "? (y/n)\n";
+        cout << "Should also save to file: " << STANDARD_MCS_OUTPUT_FILENAME << "? (y/n)\n";
         int status = 0;
         char choice;
         cin >> choice;
         if (choice == 'y') {
             vector<WordMatch> results;
-            size_t total = filters_map.size();
-            size_t i = 0;
             for (const auto& pair : filters_map) {
                 results.push_back(pair.second);
-                print_progress(static_cast<int>(++i), static_cast<int>(total));
             }
 
             vector<string> lines = convert_matches_to_lines(results);
