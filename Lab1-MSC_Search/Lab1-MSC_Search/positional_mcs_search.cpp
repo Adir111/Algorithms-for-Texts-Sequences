@@ -72,7 +72,7 @@ namespace PositionalMCSSearch {
 
 
         // --- Iterate over each search word ---
-        cout << "[PositionalMCSSearch] Start iterating over search words..";
+        cout << "[PositionalMCSSearch] Start iterating over search words..\n";
         for (size_t word_index = 0; word_index < total_words; ++word_index) {
             const string& word = search_words[word_index];
             const size_t search_word_length = word.length();
@@ -95,8 +95,8 @@ namespace PositionalMCSSearch {
         vector<string> output_lines = convert_matches_to_lines(results_vector);
 
         // Save results to file
-        int status = save_to_file(output_lines, POSITIONAL_MCS_SEARCH_OUTPUT_FILENAME);
-        if (status == 0) cout << "[PositionalMCSSearch] MCS search complete with total finds " << count_total_finds << ".Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
+        int status = save_to_file(output_lines, POSITIONAL_MCS_SEARCH_OUTPUT_FILENAME, true);
+        if (status == 0) cout << "[PositionalMCSSearch] MCS search complete with total finds " << count_total_finds << ". Results saved to " << STANDARD_MCS_OUTPUT_FILENAME << '\n';
         return status;
     }
 }

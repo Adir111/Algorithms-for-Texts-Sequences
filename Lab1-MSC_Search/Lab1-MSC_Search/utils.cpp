@@ -165,14 +165,15 @@ namespace Utils {
      *
      * @param lines The lines to write
      * @param filename The target filename
+     * @param overwrite Should overwrite a file that exists or not, default to false.
      * @return int 0 on success, -1 on failure
      */
-    int save_to_file(const vector<string>& lines, const string& filename) {
+    int save_to_file(const vector<string>& lines, const string& filename, bool overwrite) {
         // Add .txt extension if needed
         string final_filename = ensure_txt_extension(filename);
         cout << "[Utils] Saving to file: " << final_filename << "\n";
 
-        if (file_exists(final_filename)) {
+        if (!overwrite && file_exists(final_filename)) {
             cout << "[Utils] File already exists. Overwrite? (y/n): ";
             char choice;
             cin >> choice;

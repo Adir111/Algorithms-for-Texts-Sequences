@@ -7,12 +7,12 @@
 
 namespace Config {
 
-    const int TEXT_SIZE = 10000000; // 10 million characters
+    const int TEXT_SIZE = 1000000; // 1 million characters
     const int NUMBER_OF_SEARCH_WORDS = 10000; // Number of search words (taken from the start of the text)
     const int SEARCH_WORD_SIZE = 21; // size of word for search
     const int MINIMAL_MATCHES = 15; // minimal amount of matches
     const int FILTER_AMOUNT_OF_MATCHES = 4; // amount of matches in the filter
-    const char Y_LETTER = 'k'; // the start char the text is being generated from (up to z)
+    const char Y_LETTER = 't'; // the start char the text is being generated from (up to z)
     const std::string STANDARD_MCS_OUTPUT_FILENAME = "standard_mcs_output"; // Output file for mcs
     const std::string POSITIONAL_MCS_OUTPUT_FILENAME = "positional_mcs_output"; // Output file for positional mcs
     const std::string RANDOM_GENERATED_TEXT_FILENAME = "generated_text"; // Output file for random generated text

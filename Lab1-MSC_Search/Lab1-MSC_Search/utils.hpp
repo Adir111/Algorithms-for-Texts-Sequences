@@ -48,9 +48,10 @@ namespace Utils {
      *
      * @param lines The lines to write
      * @param filename The target filename
+     * @param overwrite Should overwrite a file that exists or not, default to false.
      * @return int 0 on success, -1 on failure
      */
-    int save_to_file(const vector<std::string>& lines, const std::string& filename);
+    int save_to_file(const vector<std::string>& lines, const std::string& filename, bool overwrite = false);
 
     /**
      * @brief Reads full text content from a file.

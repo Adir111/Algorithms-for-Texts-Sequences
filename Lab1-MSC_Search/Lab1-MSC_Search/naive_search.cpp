@@ -24,7 +24,7 @@ namespace NaiveSearch {
 
             // Check each character of the word
             for (size_t j = 0; j < word_len; ++j) {
-                if (text[i + j] != word[j])
+                if (text[i + j] == word[j])
                     matches++;
             }
 
@@ -82,7 +82,7 @@ namespace NaiveSearch {
 
 
         vector<string> lines = convert_matches_to_lines(results_vector);
-        int status = save_to_file(lines, NAIVE_SEARCH_OUTPUT_FILENAME);
+        int status = save_to_file(lines, NAIVE_SEARCH_OUTPUT_FILENAME, true);
 
         if (status == 0) cout << "[NaiveSearch] Search complete, found total of " << count_total_finds << ".\n";
         return status;
