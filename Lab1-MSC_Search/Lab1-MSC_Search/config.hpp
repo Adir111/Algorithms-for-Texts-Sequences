@@ -25,7 +25,6 @@ namespace Config {
     const std::string STANDARD_MCS_SEARCH_SUMMARY_FILENAME = "summary_standard_mcs"; // Output file for summary of Standard MCS Search
     const std::string POSITIONAL_MCS_SEARCH_SUMMARY_FILENAME = "summary_positional_mcs"; // Output file for summary of Positional MCS Search
     const std::string COMBINED_SUMMARY_FILENAME = "summary_all"; // Output file for combined summary of all searches
-    const bool VALIDATE_SELECTIONS = false; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
     const std::vector<std::string> OPTIONS = {

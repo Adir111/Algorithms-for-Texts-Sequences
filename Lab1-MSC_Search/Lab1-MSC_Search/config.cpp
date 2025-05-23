@@ -27,7 +27,6 @@ namespace Config {
         cout << "Standard_MCS_Summary_Filename   : " << STANDARD_MCS_SEARCH_SUMMARY_FILENAME << "\n";
         cout << "Positional_MCS_Summary_Filename : " << POSITIONAL_MCS_SEARCH_SUMMARY_FILENAME << "\n";
         cout << "Combined_Summary_Filename       : " << COMBINED_SUMMARY_FILENAME << "\n";
-        cout << "Validate_Selections             : " << (VALIDATE_SELECTIONS ? "yes" : "no") << "\n";
         cout << "=======================================================\n\n";
     }
 

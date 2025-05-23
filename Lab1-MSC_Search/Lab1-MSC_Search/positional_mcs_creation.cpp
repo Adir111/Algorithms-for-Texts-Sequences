@@ -169,7 +169,6 @@ namespace PositionalMCS {
         char answer;
         cin >> answer;
         bool should_overwrite_all = answer == 'y';
-        cin >> answer;
         for (size_t i = 0; i < all_mcs.size(); ++i) {
             string filename = POSITIONAL_MCS_OUTPUT_FILENAME + "_" + to_string(i);
             int status = save_to_file(all_mcs[i], filename, should_overwrite_all);

@@ -130,6 +130,17 @@ namespace FinalSummary {
 
         final_summary_lines.push_back("\n");
 
+        // === Section 5: Configuration Settings ===
+        final_summary_lines.push_back("== Configuration Settings ==\n");
+        final_summary_lines.push_back("Text size                       : " + to_string(TEXT_SIZE));
+        final_summary_lines.push_back("Number of Search Words          : " + to_string(NUMBER_OF_SEARCH_WORDS));
+        final_summary_lines.push_back("Y-Letter                        : " + string(1, Y_LETTER));
+        final_summary_lines.push_back("Search Word Size (pattern)      : " + to_string(SEARCH_WORD_SIZE));
+        final_summary_lines.push_back("Minimal Matches (min hits)      : " + to_string(MINIMAL_MATCHES));
+        final_summary_lines.push_back("Filter Amount Of Matches        : " + to_string(FILTER_AMOUNT_OF_MATCHES));
+        final_summary_lines.push_back("\n");
+
+
 
         // === Phase 3: Save to file ===
         int result = save_to_file(final_summary_lines, COMBINED_SUMMARY_FILENAME, true);
