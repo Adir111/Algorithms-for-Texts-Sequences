@@ -1,6 +1,7 @@
 #ifndef STANDARD_MCS_SEARCH_HPP
 #define STANDARD_MCS_SEARCH_HPP
 
+#include <chrono>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,6 +9,7 @@
 #include <set>
 #include <iomanip>
 
+#include "Summary.hpp"
 #include "WordMatch.hpp"
 #include "utils.hpp"
 #include "config.hpp"

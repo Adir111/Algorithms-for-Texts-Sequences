@@ -3,6 +3,7 @@
 using namespace std;
 using namespace Config;
 using namespace Utils;
+using namespace chrono;
 
 namespace NaiveSearch {
 
@@ -40,8 +41,6 @@ namespace NaiveSearch {
     /**
      * @brief Performs naive search for all given words and writes results to file.
      *
-     * @param search_words Vector of words to search
-     * @param output_filename Output file name
      * @return int 0 on success, -1 on failure
      */
     int perform_naive_search() {
@@ -63,6 +62,7 @@ namespace NaiveSearch {
         }
 
         set<WordMatch> unique_matches;
+        auto start = steady_clock::now();
 
         // Search each unique word only once
         size_t total_words = search_words.size();
@@ -77,12 +77,18 @@ namespace NaiveSearch {
             print_progress(static_cast<int>(++processed), static_cast<int>(total_words));
         }
 
+        auto end = steady_clock::now();
+        duration<double> elapsed_seconds = end - start;
+        double seconds = elapsed_seconds.count();
+        Summary summary = { "Naive Search", count_total_finds, seconds };
+
         // Prepare output lines
         vector<WordMatch> results_vector(unique_matches.begin(), unique_matches.end());
-
-
         vector<string> lines = convert_matches_to_lines(results_vector);
         int status = save_to_file(lines, NAIVE_SEARCH_OUTPUT_FILENAME, true);
+        if (save_to_file(summary.to_lines(), NAIVE_SEARCH_SUMMARY_FILENAME, true) != 0)
+            cout << "[NaiveSearch] Summary failed saving.\n";
+        else cout << "[NaiveSearch] Summary file has saved to " << NAIVE_SEARCH_SUMMARY_FILENAME << "\n";
 
         if (status == 0) cout << "[NaiveSearch] Search complete, found total of " << count_total_finds << ".\n";
         return status;

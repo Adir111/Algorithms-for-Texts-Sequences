@@ -165,11 +165,16 @@ namespace PositionalMCS {
         }
 
         // === Step 4: Save each MCS[i] to separate files ===
+        cout << "[PositionalMCS] Should overwrite ALL old MCS file if present? (y/n)\n";
+        char answer;
+        cin >> answer;
+        bool should_overwrite_all = answer == 'y';
+        cin >> answer;
         for (size_t i = 0; i < all_mcs.size(); ++i) {
             string filename = POSITIONAL_MCS_OUTPUT_FILENAME + "_" + to_string(i);
-            int status = save_to_file(all_mcs[i], filename);
+            int status = save_to_file(all_mcs[i], filename, should_overwrite_all);
             if (status == 0)
-                cout << "[PositionalMSC] MCS[" << i << "] saved with " << all_mcs[i].size() << " entries to " << filename << ".\n";
+                cout << "[PositionalMCS] MCS[" << i << "] saved with " << all_mcs[i].size() << " entries to " << filename << ".\n";
         }
 
         return 0; // return 0 if all files saved

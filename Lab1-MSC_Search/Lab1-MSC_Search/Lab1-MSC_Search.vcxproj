@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="config.hpp" />
     <ClInclude Include="create_filters_map.hpp" />
+    <ClInclude Include="final_summary.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="mcs_creation.hpp" />
     <ClInclude Include="naive_search.hpp" />
@@ -137,12 +138,14 @@
     <ClInclude Include="random_text.hpp" />
     <ClInclude Include="search_words_generator.hpp" />
     <ClInclude Include="standard_mcs_search.hpp" />
+    <ClInclude Include="Summary.hpp" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="WordMatch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp" />
     <ClCompile Include="create_filters_map.cpp" />
+    <ClCompile Include="final_summary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mcs_creation.cpp" />
     <ClCompile Include="naive_search.cpp" />

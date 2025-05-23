@@ -51,6 +51,12 @@
     <ClInclude Include="positional_mcs_search.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Summary.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="final_summary.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp">
@@ -84,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="positional_mcs_search.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="final_summary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

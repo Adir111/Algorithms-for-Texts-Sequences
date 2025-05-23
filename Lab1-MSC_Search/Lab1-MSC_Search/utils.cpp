@@ -6,10 +6,6 @@ using namespace Config;
 
 namespace Utils {
 
-    bool has_generated_mcs = false;
-    bool has_generated_text = false;
-    bool has_generated_search_words = false;
-
     /**
      * @brief Ensures the filename has a .txt extension.
      *
@@ -21,79 +17,6 @@ namespace Utils {
             return filename + ".txt";
         }
         return filename;
-    }
-
-    /**
-     * @brief Determines whether a timer should be set for the given choice.
-     *
-     * @param choice The user choice.
-     * @return true if a timer is needed, false otherwise.
-     */
-    static bool should_set_timer(int choice) {
-        return find(TIMER_CHOICES.begin(), TIMER_CHOICES.end(), choice) != TIMER_CHOICES.end();
-    }
-
-
-    /**
-     * @brief Validates whether the selected choice can be executed
-     *        based on the current progress flags and dependencies.
-     *
-     * If dependencies are not met, error messages are printed and execution is halted.
-     *
-     * @param choice Integer representing the operation choice to validate.
-     */
-    static void validate_choice(int choice) {
-        if (VALIDATE_SELECTIONS) {
-            switch (choice) {
-            case 3:
-                if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating text (Option 2).\n";
-                    return;
-                }
-                break;
-            case 4:
-                if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating text (Option 2).\n";
-                    return;
-                }
-                if (!has_generated_search_words) {
-                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating search words (Option 3).\n";
-                    return;
-                }
-                break;
-            case 5:
-                if (!has_generated_mcs) {
-                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before creating MCS (Option 1).\n";
-                    return;
-                }
-                if (!has_generated_text) {
-                    cerr << "Error: Cannot run \"" << OPTIONS[choice] << "\" before generating text (Option 2).\n";
-                    return;
-                }
-                break;
-            }
-        }
-    }
-
-    /**
-     * @brief Updates internal state flags based on the completed operation choice.
-     *
-     * Tracks which key steps have been successfully executed for dependency management.
-     *
-     * @param choice Integer representing the operation choice that just completed.
-     */
-    static void update_flags(int choice) {
-        switch (choice) {
-        case 1:
-            has_generated_mcs = true;
-            break;
-        case 2:
-            has_generated_text = true;
-            break;
-        case 3:
-            has_generated_search_words = true;
-            break;
-        }
     }
 
     /**
@@ -117,35 +40,20 @@ namespace Utils {
      * @param choice Integer representing the selected operation choice.
      *               Valid choices:
      *               - 1: MCS Creation
-     *               - 2: Random Text Generation
-     *               - 3: Search Words Generation (requires step 2)
-     *               - 4: Naive Search (requires steps 2 and 3)
-     *               - 5: Filters Map Creation (requires steps 1 and 2)
+     *               - 2: Positional MCS Creation
+     *               - 3: Random Text Creation
+     *               - 4: Search Words Creation
+     *               - 5: Filters Map Creation
+     *               - 6: Naive Search
+     *               - 7: Standard MCS Search
+     *               - 8: Positional MCS Search
+     *
      */
     void handle_operation(int (*operation)(), int choice) {
-        // Dependency checks
-        validate_choice(choice);
-
-        // Timer start if choice is one of the searches
-        auto start = (should_set_timer(choice)) ? steady_clock::now() : steady_clock::time_point();
-
-        // Run operation
         if (operation() != 0) {
-            cerr << "Error: " << OPTIONS[choice - 1] << " failed.\n";
+            cerr << "Error: " << OPTIONS[static_cast<size_t>(choice) - 1] << " failed.\n";
             return;
         }
-
-        // Timer end and report duration if choice is 5
-        if (should_set_timer(choice)) {
-            auto end = steady_clock::now();
-            duration<double> elapsed_seconds = end - start;
-            cout << "[Utils] Operation \"" << OPTIONS[choice - 1] << "\" completed in "
-                << fixed << setprecision(2) << elapsed_seconds.count() << " seconds.\n";
-        }
-
-
-        // Set flags based on operation step
-        update_flags(choice);
     }
 
     /**
@@ -175,7 +83,7 @@ namespace Utils {
 
         if (!overwrite && file_exists(final_filename)) {
             cout << "[Utils] File already exists. Overwrite? (y/n): ";
-            char choice;
+            char choice = 'n';
             cin >> choice;
             if (choice != 'y' && choice != 'Y') {
                 cout << "[Utils] Save cancelled by user.\n";
@@ -262,7 +170,7 @@ namespace Utils {
      * @return vector<string> Formatted output lines
      */
     vector<string> convert_matches_to_lines(const vector<WordMatch>& matches) {
-        cout << "[Utils] Converting matches to output lines...\n";
+        std::cout << "[Utils] Converting matches to output lines...\n";
 
         vector<string> lines;
         size_t total = matches.size();
@@ -270,24 +178,12 @@ namespace Utils {
         // Process each match object
         for (size_t i = 0; i < total; ++i) {
             const auto& match = matches[i];
-            string line = "Word: " + match.word + "\nPositions: ";
-
-
-            // Iterate over the set of positions
-            size_t count = 0;
-            for (auto pos : match.positions) {
-                line += to_string(pos);
-                if (++count < match.positions.size()) {
-                    line += ", ";
-                }
-            }
-
-            lines.push_back(line + "\n");
+            lines.push_back(match.to_string() + "\n");
 
             print_progress(static_cast<int>(i), static_cast<int>(total));
         }
 
-        cout << "[Utils] Conversion complete. Total words: " << matches.size() << '\n';
+        std::cout << "[Utils] Conversion complete. Total words: " << matches.size() << '\n';
         return lines;
     }
 

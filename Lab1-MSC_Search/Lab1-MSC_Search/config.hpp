@@ -7,7 +7,7 @@
 
 namespace Config {
 
-    const int TEXT_SIZE = 1000000; // 1 million characters
+    const int TEXT_SIZE = 10000000; // 10 million characters
     const int NUMBER_OF_SEARCH_WORDS = 10000; // Number of search words (taken from the start of the text)
     const int SEARCH_WORD_SIZE = 21; // size of word for search
     const int MINIMAL_MATCHES = 15; // minimal amount of matches
@@ -21,6 +21,10 @@ namespace Config {
     const std::string NAIVE_SEARCH_OUTPUT_FILENAME = "naive_output"; // Output file for naive search algorithm
     const std::string STANDARD_MCS_SEARCH_OUTPUT_FILENAME = "standard_mcs_search_output"; // Output file for standard MCS search algorithm
     const std::string POSITIONAL_MCS_SEARCH_OUTPUT_FILENAME = "positional_mcs_search_output"; // Output file for positional MCS search algorithm
+    const std::string NAIVE_SEARCH_SUMMARY_FILENAME = "summary_naive"; // Output file for summary of Naive Search
+    const std::string STANDARD_MCS_SEARCH_SUMMARY_FILENAME = "summary_standard_mcs"; // Output file for summary of Standard MCS Search
+    const std::string POSITIONAL_MCS_SEARCH_SUMMARY_FILENAME = "summary_positional_mcs"; // Output file for summary of Positional MCS Search
+    const std::string COMBINED_SUMMARY_FILENAME = "summary_all"; // Output file for combined summary of all searches
     const bool VALIDATE_SELECTIONS = false; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop

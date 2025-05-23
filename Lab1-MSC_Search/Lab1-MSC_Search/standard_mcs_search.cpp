@@ -4,6 +4,7 @@ using namespace std;
 using namespace Utils;
 using namespace Config;
 using namespace FiltersMap;
+using namespace chrono;
 
 namespace StandardMCSSearch {
 
@@ -128,6 +129,8 @@ namespace StandardMCSSearch {
         set<WordMatch> results;
         size_t total_words = search_words.size();
 
+        auto start = steady_clock::now();
+
         // --- Iterate over each search word ---
         cout << "[StandardMCSSearch] Start iterating over search words..\n";
         for (size_t word_index = 0; word_index < total_words; ++word_index) {
@@ -149,11 +152,20 @@ namespace StandardMCSSearch {
             print_progress(static_cast<int>(word_index), static_cast<int>(total_words));
         }
 
+        auto end = steady_clock::now();
+        duration<double> elapsed_seconds = end - start;
+        double seconds = elapsed_seconds.count();
+        Summary summary = { "Positional Search", count_total_finds, seconds };
+
         vector<WordMatch> results_vector(results.begin(), results.end());
         vector<string> output_lines = convert_matches_to_lines(results_vector);
 
         // Save results to file
         int status = save_to_file(output_lines, STANDARD_MCS_SEARCH_OUTPUT_FILENAME, true);
+        if (save_to_file(summary.to_lines(), STANDARD_MCS_SEARCH_SUMMARY_FILENAME, true) != 0)
+            cout << "[StandardMCSSearch] Summary failed saving.\n";
+        else cout << "[StandardMCSSearch] Summary file has saved to " << STANDARD_MCS_SEARCH_SUMMARY_FILENAME << "\n";
+
         if (status == 0) cout << "[StandardMCSSearch] MCS search complete with total finds " << count_total_finds << ". Results saved to " << STANDARD_MCS_SEARCH_OUTPUT_FILENAME << '\n';
         return status;
     }
