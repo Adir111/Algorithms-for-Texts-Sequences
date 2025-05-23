@@ -14,8 +14,8 @@ using std::set;
  */
 struct Summary {
     string search_type;
-    int matches_found;
-    double time_took;
+    int matches_found = 0;
+    double time_took = 0;
 
     /**
      * @brief Converts the Summary object into a vector of strings representing each line.

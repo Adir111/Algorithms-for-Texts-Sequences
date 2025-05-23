@@ -28,7 +28,6 @@ namespace Config {
     const bool VALIDATE_SELECTIONS = false; // Flag indicating if should validate user selections
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
-    const std::vector<int> TIMER_CHOICES = { 6, 7, 8 }; // Used to indicate which choices should have timer
     const std::vector<std::string> OPTIONS = {
         "MCS Creation",
         "Positional MCS Creation",
@@ -37,7 +36,8 @@ namespace Config {
         "Filters Map Creation",
         "Naive Search",
         "Standard MCS Search",
-        "Positional MCS Search"
+        "Positional MCS Search",
+        "Create Final Summary"
     }; // List of choices for user
 
     /**

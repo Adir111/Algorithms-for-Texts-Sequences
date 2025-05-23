@@ -11,6 +11,7 @@ using namespace NaiveSearch;
 using namespace FiltersMap;
 using namespace StandardMCSSearch;
 using namespace PositionalMCSSearch;
+using namespace FinalSummary;
 
 int main() {
     int choice;
@@ -46,6 +47,9 @@ int main() {
             break;
         case 8:
             handle_operation(run_positional_mcs_search, choice);
+            break;
+        case 9:
+            handle_operation(create_final_summary, choice);
             break;
         case 0:
             cout << "Exiting program. Goodbye!\n";

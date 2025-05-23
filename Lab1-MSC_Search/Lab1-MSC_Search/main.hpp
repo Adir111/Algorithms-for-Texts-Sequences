@@ -13,5 +13,6 @@
 #include "create_filters_map.hpp"
 #include "standard_mcs_search.hpp"
 #include "positional_mcs_search.hpp"
+#include "final_summary.hpp"
 
 #endif
