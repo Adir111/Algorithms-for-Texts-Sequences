@@ -14,6 +14,7 @@
 #include "utils.hpp"
 #include "config.hpp"
 #include "create_filters_map.hpp"
+#include "naive_search.hpp"
 
 namespace StandardMCSSearch {
 

@@ -5,6 +5,7 @@ using namespace Utils;
 using namespace Config;
 using namespace FiltersMap;
 using namespace chrono;
+using namespace NaiveSearch;
 
 namespace StandardMCSSearch {
 
@@ -31,21 +32,14 @@ namespace StandardMCSSearch {
         if (it != filters_map.end()) {
             // Iterate over the positions where the filtered word was found
             for (size_t pos : it->second.positions) {
-                size_t position_index = pos - 1;
-                int matches = 0;
+                size_t position_text = pos - 1;
 
                 // Ensure we're not overflowing the text by checking boundaries, skip position if does
-                if (position_index + word.size() >= TEXT_SIZE)
+                if (position_text + word.size() >= TEXT_SIZE)
                     continue;
 
-                // Check each character surrounding the position in the text
-                for (int check_index = 0; check_index < word.size(); ++check_index) {
-                    if (word[check_index] == text[position_index + check_index])
-                        matches++;
-                }
-
                 // If matches exceed the threshold, insert or update the match
-                if (matches >= MINIMAL_MATCHES) {
+                if (check_matches(text, position_text, word)) {
                     if (insert_or_update_match(results, word, pos))
                         count_total_finds++;
                 }
