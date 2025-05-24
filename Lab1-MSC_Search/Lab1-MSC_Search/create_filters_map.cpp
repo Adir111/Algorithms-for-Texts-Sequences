@@ -5,6 +5,36 @@ using namespace Config;
 using namespace Utils;
 
 namespace FiltersMap {
+
+    /**
+     * @brief Applies a binary filter to a given word and returns a filtered version of the word.
+     *
+     * The method creates a filtered version of the input `word`, where characters corresponding
+     * to '1' positions in the filter are retained, and all others are replaced with underscores ('_').
+     *
+     * @param word The word to be filtered.
+     * @param filter A string of '0's and '1's representing the filter. '1' means the character at that position
+     *               will be kept from the original word, and '0' means it will be replaced with '_'.
+     * @param sliding_window_index The starting index within the word to begin applying the filter.
+     *
+     * @return A filtered string where the characters are either from the `word` or '_' depending on the filter.
+     */
+    string applyFilterToWord(const string& word, const string& filter, size_t sliding_window_index) {
+        size_t search_word_length = word.size();
+        size_t filter_length = filter.size();
+
+        string filtered_word(search_word_length, '_');  // Fill with '_'
+
+        // --- Apply filter to substring of word ---
+        for (size_t i = 0; i < filter_length; ++i) {
+            if (filter[i] == '1') {
+                filtered_word[sliding_window_index + i] = word[sliding_window_index + i];
+            }
+        }
+
+        return filtered_word;
+    }
+
     unordered_map<string, WordMatch> filters_map;
 
     /**
@@ -42,24 +72,7 @@ namespace FiltersMap {
 
             // === Phase 3: Create words from the window using each filter ===
             for (const string& filter : filters) {
-                string filtered_word;
-                int ones_count = 0;
-
-                for (size_t j = 0; j < SEARCH_WORD_SIZE; ++j) {
-                    if (j < filter.size() && filter[j] == '1') {
-                        filtered_word += window[j];
-                        ones_count++;
-
-                        // Stop if we reached the required amount of 1s, and fill with underscores
-                        if (ones_count == FILTER_AMOUNT_OF_MATCHES) {
-                            filtered_word.append(SEARCH_WORD_SIZE - filtered_word.length(), '_');
-                            break;
-                        }
-                    }
-                    else {
-                        filtered_word += '_';
-                    }
-                }
+                string filtered_word = applyFilterToWord(window, filter, 0);
 
                 // === Phase 4: Update the map ===
                 size_t position = i + 1;
