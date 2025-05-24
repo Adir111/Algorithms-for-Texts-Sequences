@@ -23,21 +23,12 @@ namespace FiltersMap {
         size_t search_word_length = word.size();
         size_t filter_length = filter.size();
 
-        string filtered_word;
+        string filtered_word(word.size(), '_');
 
         // --- Apply filter to substring of word ---
-        for (size_t i = 0; i < filter_length; ++i) {
-            if (filter[i] == '1') {
-                filtered_word += word[sliding_window_index + i];
-            }
-            else 
-                filtered_word += '_';
-        }
-
-        // --- Pad with '_' to match the size of the original word ---
-        while (filtered_word.size() < search_word_length) {
-            filtered_word += '_';
-        }
+        for (size_t i = 0; i < filter_length; ++i)
+            if (filter[i] == '1')
+                filtered_word[i] = word[sliding_window_index + i];
 
         return filtered_word;
     }
