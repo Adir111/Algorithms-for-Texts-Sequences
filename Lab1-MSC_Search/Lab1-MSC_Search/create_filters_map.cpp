@@ -75,12 +75,10 @@ namespace FiltersMap {
                 // === Phase 4: Update the map ===
                 size_t position = i + 1;
 
-                if (filters_map.find(filtered_word) == filters_map.end()) {
+                if (filters_map.find(filtered_word) == filters_map.end())
                     filters_map[filtered_word] = WordMatch{ filtered_word, {position} };
-                }
-                else {
+                else 
                     filters_map[filtered_word].positions.insert(position);
-                }
             }
             print_progress(static_cast<int>(i + 1), static_cast<int>(total_iterations));
         }
