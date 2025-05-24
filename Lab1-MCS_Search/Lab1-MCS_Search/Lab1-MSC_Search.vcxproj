@@ -24,6 +24,7 @@
     <ProjectGuid>{57d68159-adf7-43d2-8d23-05be5966075c}</ProjectGuid>
     <RootNamespace>Lab1MSCSearch</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Lab1-MCS_Search</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
