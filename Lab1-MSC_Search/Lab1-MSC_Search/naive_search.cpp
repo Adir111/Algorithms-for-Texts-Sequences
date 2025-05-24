@@ -22,16 +22,40 @@ namespace NaiveSearch {
      * @return true if the number of matching characters is >= MINIMAL_MATCHES;
      *         false otherwise.
      *
-     * @note Assumes that `text_index + word.length()` does not exceed `text.size()`.
      */
-    bool check_matches(const string& text, int text_index, const string& word) {
-        int matches = 0;
-        for (size_t curr_word_index = 0; curr_word_index < word.length(); curr_word_index++) {
-            if (text[text_index + curr_word_index] == word[curr_word_index])
-                matches++;
+    bool check_matches(const string& text, size_t text_index, const string& word) {
+        try {
+            if (text_index > text.size() || text_index + word.length() > text.size()) {
+                return false;
+            }
+
+            int matches = 0;
+            for (size_t curr_word_index = 0; curr_word_index < word.length(); curr_word_index++) {
+                if (text[text_index + curr_word_index] == word[curr_word_index])
+                    matches++;
+            }
+            return matches >= MINIMAL_MATCHES;
         }
-        return matches >= MINIMAL_MATCHES;
+        catch (const std::exception& e) {
+            cerr << "[check_matches] EXCEPTION CAUGHT!\n";
+            cerr << "Exception: " << e.what() << "\n";
+            cerr << "text_index: " << text_index << "\n";
+            cerr << "word.length(): " << word.length() << "\n";
+            cerr << "text.size(): " << text.size() << "\n";
+            cerr << "word: \"" << word << "\"\n";
+
+            if (text_index < text.size()) {
+                size_t max_extract = min(word.length() + 10, text.size() - text_index);
+                cerr << "text excerpt from index: \"" << text.substr(text_index, max_extract) << "\"\n";
+            }
+            else {
+                cerr << "text_index is out of bounds for text\n";
+            }
+
+            exit(EXIT_FAILURE);
+        }
     }
+
 
     /**
      * @brief Finds all starting positions of a word in the given text using naive search.

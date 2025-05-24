@@ -32,15 +32,15 @@ namespace StandardMCSSearch {
         if (it != filters_map.end()) {
             // Iterate over the positions where the filtered word was found
             for (size_t pos : it->second.positions) {
-                size_t position_text = pos - 1;
+                size_t position_text = pos - sliding_window_index - 1;
 
                 // Ensure we're not overflowing the text by checking boundaries, skip position if does
-                if (position_text + word.size() >= TEXT_SIZE)
+                if (position_text + word.size() >= text.size())
                     continue;
 
                 // If matches exceed the threshold, insert or update the match
                 if (check_matches(text, position_text, word)) {
-                    if (insert_or_update_match(results, word, pos))
+                    if (insert_or_update_match(results, word, position_text + 1))
                         count_total_finds++;
                 }
             }

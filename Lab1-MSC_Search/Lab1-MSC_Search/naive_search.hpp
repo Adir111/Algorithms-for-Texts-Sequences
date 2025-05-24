@@ -30,7 +30,7 @@ namespace NaiveSearch {
      *
      * @note Assumes that `text_index + word.length()` does not exceed `text.size()`.
      */
-    bool check_matches(const string& text, int text_index, const string& word);
+    bool check_matches(const string& text, size_t text_index, const string& word);
 
     /**
      * @brief Performs naive search for all given words and writes results to file.
