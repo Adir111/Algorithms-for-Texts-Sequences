@@ -23,7 +23,7 @@ namespace StandardMCSSearch {
      * @param results A set to store the matches.
      * @return The total count of finds (matches found).
      */
-    int searchAndInsertMatches(const string& filtered_word, const string& word, const string& text,
+    int search_and_insert_matches(const string& filtered_word, const string& word, const string& text,
         size_t sliding_window_index, set<WordMatch>& results) {
         int count_total_finds = 0;
 
@@ -108,10 +108,10 @@ namespace StandardMCSSearch {
 
                 // --- Slide the filter over the word ---
                 for (size_t sliding_window_index = 0; sliding_window_index + filter_length <= search_word_length; ++sliding_window_index) {
-                    string filtered_word = applyFilterToWord(word, filter, sliding_window_index);
+                    string filtered_word = apply_filter_to_word(word, filter, sliding_window_index);
 
                     // --- Check if this masked word appears in the filters map ---
-                    count_total_finds += searchAndInsertMatches(filtered_word, word, text, sliding_window_index, results);
+                    count_total_finds += search_and_insert_matches(filtered_word, word, text, sliding_window_index, results);
                 }
             }
             print_progress(static_cast<int>(word_index), static_cast<int>(total_words));

@@ -14,7 +14,7 @@ namespace Config {
         cout << "Y-Letter                        : " << Y_LETTER << "\n";
         cout << "Search_Word_Size (pattern)      : " << SEARCH_WORD_SIZE << "\n";
         cout << "Minimal_Matches (min hits)      : " << MINIMAL_MATCHES << "\n";
-        cout << "Filter_Amount_Of_Matches        : " << FILTER_AMOUNT_OF_MATCHES << "\n";
+        cout << "Filter_Number_Of_Matches        : " << FILTER_NUMBER_OF_MATCHES << "\n";
         cout << "MCS_Output_FileName             : " << STANDARD_MCS_OUTPUT_FILENAME << "\n";
         cout << "Positional_MCS_Output_FileName  : " << POSITIONAL_MCS_OUTPUT_FILENAME << "\n";
         cout << "Text_Output_Filename            : " << RANDOM_GENERATED_TEXT_FILENAME << "\n";
@@ -43,8 +43,8 @@ namespace Config {
             errors.emplace_back("MINIMAL_MATCHES should be lower than SEARCH_WORD_SIZE");
         }
 
-        if (MINIMAL_MATCHES < FILTER_AMOUNT_OF_MATCHES) {
-            errors.emplace_back("FILTER_AMOUNT_OF_MATCHES should be lower than MINIMAL_MATCHES");
+        if (MINIMAL_MATCHES < FILTER_NUMBER_OF_MATCHES) {
+            errors.emplace_back("FILTER_NUMBER_OF_MATCHES should be lower than MINIMAL_MATCHES");
         }
 
         if (TEXT_SIZE < minimumTextSize) {

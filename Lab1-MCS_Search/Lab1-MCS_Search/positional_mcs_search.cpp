@@ -84,10 +84,10 @@ namespace PositionalMCSSearch {
 
                 // --- Try all filters on this word ---
                 for (const string& filter : all_mcs[mcs_filter_index]) {
-                    string filtered_word = applyFilterToWord(word, filter, mcs_filter_index);
+                    string filtered_word = apply_filter_to_word(word, filter, mcs_filter_index);
 
                     // --- Check if this masked word appears in the filters map ---
-                    count_total_finds += searchAndInsertMatches(filtered_word, word, text, mcs_filter_index, results);
+                    count_total_finds += search_and_insert_matches(filtered_word, word, text, mcs_filter_index, results);
                 }
             }
             print_progress(static_cast<int>(word_index), static_cast<int>(total_words));

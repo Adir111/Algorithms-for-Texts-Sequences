@@ -68,7 +68,7 @@ namespace PositionalMCS {
         int mcs_index = 0;
         vector<string> mcs_i_plus_1;
 
-        while (all_valid_combinations.size() > 0 && (mcs_index + FILTER_AMOUNT_OF_MATCHES) <= MINIMAL_MATCHES) { // stop when all combinations are removed.
+        while (all_valid_combinations.size() > 0 && (mcs_index + FILTER_NUMBER_OF_MATCHES) <= MINIMAL_MATCHES) { // stop when all combinations are removed.
             cout << "[PositionalMCS] Started process for MCS[" << mcs_index + 1 << "]..\n";
             int processed = 0;
             mcs_i_plus_1 = all_mcs[mcs_index];

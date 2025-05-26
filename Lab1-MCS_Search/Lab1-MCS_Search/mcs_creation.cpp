@@ -114,7 +114,7 @@ namespace MCS {
                 continue;
             }
 
-            // Truncate after FILTER_AMOUNT_OF_MATCHES ones
+            // Truncate after FILTER_NUMBER_OF_MATCHES ones
             string truncated;
             int ones_seen = 0;
             for (char ch : value) {
@@ -122,7 +122,7 @@ namespace MCS {
                 if (ch == '1') {
                     ++ones_seen;
                 }
-                if (ones_seen == FILTER_AMOUNT_OF_MATCHES) {
+                if (ones_seen == FILTER_NUMBER_OF_MATCHES) {
                     break;
                 }
             }

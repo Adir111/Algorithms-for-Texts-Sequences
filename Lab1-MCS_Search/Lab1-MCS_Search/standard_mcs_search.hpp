@@ -32,7 +32,7 @@ namespace StandardMCSSearch {
 	 * @param results A set to store the matches.
 	 * @return The total count of finds (matches found).
 	 */
-	int searchAndInsertMatches(const string& filtered_word, const string& word, const string& text,
+	int search_and_insert_matches(const string& filtered_word, const string& word, const string& text,
 		size_t sliding_window_index, set<WordMatch>& results);
 
 	/**

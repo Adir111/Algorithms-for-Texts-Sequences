@@ -137,7 +137,7 @@ namespace FinalSummary {
         final_summary_lines.push_back("Y-Letter                        : " + string(1, Y_LETTER));
         final_summary_lines.push_back("Search Word Size (pattern)      : " + to_string(SEARCH_WORD_SIZE));
         final_summary_lines.push_back("Minimal Matches (min hits)      : " + to_string(MINIMAL_MATCHES));
-        final_summary_lines.push_back("Filter Amount Of Matches        : " + to_string(FILTER_AMOUNT_OF_MATCHES));
+        final_summary_lines.push_back("Filter Amount Of Matches        : " + to_string(FILTER_NUMBER_OF_MATCHES));
         final_summary_lines.push_back("\n");
 
 

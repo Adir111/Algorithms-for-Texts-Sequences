@@ -26,7 +26,7 @@ namespace FiltersMap {
      *
      * @return A filtered string where the characters are either from the `word` or '_' depending on the filter.
      */
-	string applyFilterToWord(const string& word, const string& filter, size_t sliding_window_index);
+	string apply_filter_to_word(const string& word, const string& filter, size_t sliding_window_index);
 
     /**
      * @brief Creates a map of filtered words and their positions in the input text.

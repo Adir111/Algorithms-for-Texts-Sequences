@@ -19,7 +19,7 @@ namespace FiltersMap {
      *
      * @return A filtered string where the characters are either from the `word` or '_' depending on the filter.
      */
-    string applyFilterToWord(const string& word, const string& filter, size_t sliding_window_index) {
+    string apply_filter_to_word(const string& word, const string& filter, size_t sliding_window_index) {
         size_t search_word_length = word.size();
         size_t filter_length = filter.size();
 
@@ -70,7 +70,7 @@ namespace FiltersMap {
 
             // === Phase 3: Create words from the window using each filter ===
             for (const string& filter : filters) {
-                string filtered_word = applyFilterToWord(window, filter, 0);
+                string filtered_word = apply_filter_to_word(window, filter, 0);
 
                 // === Phase 4: Update the map ===
                 size_t position = i + 1;
