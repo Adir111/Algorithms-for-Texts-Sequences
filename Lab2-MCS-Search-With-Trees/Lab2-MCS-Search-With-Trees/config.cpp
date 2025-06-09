@@ -18,9 +18,8 @@ namespace Config {
         cout << "MCS_Output_FileName             : " << MCS_OUTPUT_FILENAME << "\n";
         cout << "Text_Output_Filename            : " << RANDOM_GENERATED_TEXT_FILENAME << "\n";
         cout << "Search_Words_Filename           : " << SEARCH_WORDS_FILENAME << "\n";
-        cout << "Tree_Map_Output_Filename        : " << TREE_MAP << "\n";
-        cout << "Tree_MCS_Output_Filename        : " << TREE_MCS_SEARCH_OUTPUT_FILENAME << "\n";
-        cout << "Tree_MCS_Summary_Filename       : " << TREE_MCS_SEARCH_SUMMARY_FILENAME << "\n";
+        cout << "Tree_MCS_Output_Filename        : " << MCS_TREE_SEARCH_OUTPUT_FILENAME << "\n";
+        cout << "Tree_MCS_Summary_Filename       : " << MCS_TREE_SEARCH_SUMMARY_FILENAME << "\n";
         cout << "=======================================================\n\n";
     }
 

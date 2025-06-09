@@ -16,9 +16,8 @@ namespace Config {
     const std::string MCS_OUTPUT_FILENAME = "mcs_output"; // Output file for mcs
     const std::string RANDOM_GENERATED_TEXT_FILENAME = "generated_text"; // Output file for random generated text
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
-    const std::string TREE_MAP = "tree_map"; // Output file for tree map
-    const std::string TREE_MCS_SEARCH_OUTPUT_FILENAME = "tree_mcs_search_output"; // Output file for tree MCS search algorithm
-    const std::string TREE_MCS_SEARCH_SUMMARY_FILENAME = "summary_tree_mcs"; // Output file for summary of Tree MCS Search
+    const std::string MCS_TREE_SEARCH_OUTPUT_FILENAME = "tree_mcs_search_output"; // Output file for tree MCS search algorithm
+    const std::string MCS_TREE_SEARCH_SUMMARY_FILENAME = "summary_tree_mcs"; // Output file for summary of Tree MCS Search
 
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop

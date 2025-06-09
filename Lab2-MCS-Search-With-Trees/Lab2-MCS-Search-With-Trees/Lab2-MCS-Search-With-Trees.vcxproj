@@ -134,7 +134,7 @@
     <ClInclude Include="TreeNode.hpp" />
     <ClInclude Include="random_text.hpp" />
     <ClInclude Include="Summary.hpp" />
-    <ClInclude Include="tree_mcs_search.hpp" />
+    <ClInclude Include="mcs_tree_search.hpp" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="WordMatch.hpp" />
   </ItemGroup>
@@ -142,11 +142,13 @@
     <ClCompile Include="config.cpp" />
     <ClCompile Include="create_mcs_tree.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TreeData.cpp" />
+    <ClCompile Include="TreeData.hpp" />
     <ClCompile Include="mcs_creation.cpp" />
     <ClCompile Include="random_text.cpp" />
     <ClCompile Include="search_words_generator.cpp" />
     <ClCompile Include="search_words_generator.hpp" />
-    <ClCompile Include="tree_mcs_search.cpp" />
+    <ClCompile Include="mcs_tree_search.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

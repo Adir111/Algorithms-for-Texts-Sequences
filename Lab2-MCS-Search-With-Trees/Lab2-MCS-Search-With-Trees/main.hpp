@@ -9,6 +9,6 @@
 #include "random_text.hpp"
 #include "search_words_generator.hpp"
 #include "create_mcs_tree.hpp"
-#include "tree_mcs_search.hpp"
+#include "mcs_tree_search.hpp"
 
 #endif

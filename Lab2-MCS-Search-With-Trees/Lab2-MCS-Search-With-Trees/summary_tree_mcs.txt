@@ -1,0 +1,3 @@
+Search Type: Positional Search
+Matches Found: 10433
+Time took: 96.343675 Seconds

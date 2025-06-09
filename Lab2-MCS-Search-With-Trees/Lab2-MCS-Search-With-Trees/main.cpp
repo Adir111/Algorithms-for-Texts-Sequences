@@ -33,7 +33,6 @@ int main() {
             handle_operation(create_mcs_tree, choice);
             break;
         case 5:
-            cout << "Not implemented yet\n";
             handle_operation(run_tree_mcs_search, choice);
             break;
         case 0:

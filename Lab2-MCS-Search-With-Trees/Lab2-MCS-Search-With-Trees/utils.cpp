@@ -40,13 +40,10 @@ namespace Utils {
      * @param choice Integer representing the selected operation choice.
      *               Valid choices:
      *               - 1: MCS Creation
-     *               - 2: Positional MCS Creation
-     *               - 3: Random Text Creation
-     *               - 4: Search Words Creation
-     *               - 5: Filters Map Creation
-     *               - 6: Naive Search
-     *               - 7: Standard MCS Search
-     *               - 8: Positional MCS Search
+     *               - 2: Random Text Creation
+     *               - 3: Search Words Creation
+     *               - 4: MCS Tree Creation
+     *               - 5: MCS Tree Search
      *
      */
     void handle_operation(int (*operation)(), int choice) {
