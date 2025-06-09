@@ -8,7 +8,6 @@ using namespace RandomText;
 using namespace SearchWordsGenerator;
 using namespace Create_MCS_Tree;
 using namespace Tree_MCS_Search;
-using namespace Tree_MCS_Search;
 
 int main() {
     int choice;
