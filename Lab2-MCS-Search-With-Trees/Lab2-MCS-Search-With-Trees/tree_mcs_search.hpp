@@ -3,7 +3,7 @@
 
 namespace Tree_MCS_Search {
 
-	int run_tree_mcs_search()
+	int run_tree_mcs_search();
 }
 
 #endif
