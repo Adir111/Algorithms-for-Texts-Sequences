@@ -8,6 +8,7 @@ using namespace RandomText;
 using namespace SearchWordsGenerator;
 using namespace Create_MCS_Tree;
 using namespace Tree_MCS_Search;
+using namespace Tree_MCS_Search;
 
 int main() {
     int choice;
@@ -34,7 +35,7 @@ int main() {
             break;
         case 5:
             cout << "Not implemented yet\n";
-            // handle_operation(run_tree_mcs_search, choice);
+            handle_operation(run_tree_mcs_search, choice);
             break;
         case 0:
             cout << "Exiting program. Goodbye!\n";

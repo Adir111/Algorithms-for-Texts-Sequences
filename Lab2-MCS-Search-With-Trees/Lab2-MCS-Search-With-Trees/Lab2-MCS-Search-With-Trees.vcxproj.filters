@@ -39,7 +39,7 @@
     <ClCompile Include="create_mcs_tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tree_ncs_search.cpp">
+    <ClCompile Include="tree_mcs_search.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
