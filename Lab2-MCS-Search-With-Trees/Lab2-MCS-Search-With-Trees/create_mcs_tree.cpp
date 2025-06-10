@@ -99,6 +99,7 @@ namespace Create_MCS_Tree {
                         // Last character — store filtered word instead of creating a new node
                         if (current->pointers[idx] == nullptr) {
                             current->pointers[idx] = static_cast<void*>(new string(filtered));
+                            current->is_leaf[idx] = true;
                         }
                         // This block was used for debugging purposes - at the leafs, only strings are expected.
                         //else {

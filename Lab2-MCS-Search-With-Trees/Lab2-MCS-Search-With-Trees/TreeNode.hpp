@@ -11,17 +11,18 @@ constexpr size_t SIZE = 'z' - Config::Y_LETTER + 2; // an extra position for $
 struct TreeNode {
     TreeNode* father;
     void* pointers[SIZE]; // Can point to WordMatch* or TreeNode*
+    bool is_leaf[SIZE];
 
     // Default constructor
     TreeNode() : father(nullptr) {
-        for (size_t i = 0; i < SIZE; ++i)
-            pointers[i] = nullptr;
+        std::fill(std::begin(pointers), std::end(pointers), nullptr);
+        std::fill(std::begin(is_leaf), std::end(is_leaf), false);
     }
 
     // Constructor with father
     TreeNode(TreeNode* parent) : father(parent) {
-        for (size_t i = 0; i < SIZE; ++i)
-            pointers[i] = nullptr;
+        std::fill(std::begin(pointers), std::end(pointers), nullptr);
+        std::fill(std::begin(is_leaf), std::end(is_leaf), false);
     }
 
 };

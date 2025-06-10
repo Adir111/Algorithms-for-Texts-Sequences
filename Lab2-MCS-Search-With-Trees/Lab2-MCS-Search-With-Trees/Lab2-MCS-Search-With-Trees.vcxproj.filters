@@ -80,5 +80,8 @@
     <ClInclude Include="TreeNode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MatchPos.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

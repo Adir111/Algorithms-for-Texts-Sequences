@@ -24,56 +24,102 @@ namespace Tree_MCS_Search {
      *         false otherwise.
      *
      */
-    static bool check_matches(const string& text, size_t text_index, const string& word) {
+    inline static bool check_matches(const string& text, size_t text_index, const string& word) {
         if (text_index > text.size() || text_index + word.length() > text.size()) {
             return false;
         }
 
         int matches = 0;
         for (size_t curr_word_index = 0; curr_word_index < word.length(); curr_word_index++) {
-            if (text[text_index + curr_word_index] == word[curr_word_index])
-                matches++;
+            if (text[text_index + curr_word_index] == word[curr_word_index]) {
+                if (++matches >= MINIMAL_MATCHES) return true;
+            } else {
+                // Early exit if too few chars left to reach MINIMAL_MATCHES
+                if ((word.length() - curr_word_index + matches) < MINIMAL_MATCHES) return false;
+            }
         }
-        return matches >= MINIMAL_MATCHES;
+        return false;
     }
 
-    const set<size_t>* get_positions_from_tree(const string& word, size_t offset) {
-        TreeNode* current = tree_data.tree;
+    static void collect_positions_from_tree(TreeNode* node, const string& word, size_t offset, size_t depth, unordered_set<size_t>& out) {
+        if (!node || offset + depth >= word.length()) return;
 
-        for (size_t i = 0; i < FILTER_NUMBER_OF_MATCHES; ++i) {
-            int idx = index_fixer(word[offset + i]);
+        int idx = index_fixer(word[offset + depth]);
+        int dollar_idx = index_fixer('$');
 
-            // Try regular path first
-            if (!current || !current->pointers[idx]) {
-                // Fallback to '$' path
-                int dollar_idx = index_fixer('$');
-                if (!current || !current->pointers[dollar_idx]) {
-                    return nullptr; // neither path exists
-                }
-                idx = dollar_idx;
-            }
-
-            if (i == FILTER_NUMBER_OF_MATCHES - 1) {
-                // Last character - check if this is a string* leaf
-                void* ptr = current->pointers[idx];
+        // Check letter path
+        if (node->pointers[idx]) {
+            void* ptr = node->pointers[idx];
+            if (node->is_leaf[idx]) {
                 string* str_ptr = static_cast<string*>(ptr);
-
-                // Confirm it's a string by checking if the filters_map contains it
                 auto it = tree_data.filters_map.find(*str_ptr);
                 if (it != tree_data.filters_map.end()) {
-                    return &it->second;
-                }
-                else {
-                    return nullptr;
+                    out.insert(it->second.begin(), it->second.end());
                 }
             }
-
-            // Advance to next TreeNode
-            current = static_cast<TreeNode*>(current->pointers[idx]);
+            else {
+                collect_positions_from_tree(static_cast<TreeNode*>(ptr), word, offset, depth + 1, out);
+            }
         }
 
-        return nullptr; // fallback (shouldn't reach here)
+        // Check $ path
+        if (node->pointers[dollar_idx]) {
+            void* ptr = node->pointers[dollar_idx];
+            if (node->is_leaf[dollar_idx]) {
+                string* str_ptr = static_cast<string*>(ptr);
+                auto it = tree_data.filters_map.find(*str_ptr);
+                if (it != tree_data.filters_map.end()) {
+                    out.insert(it->second.begin(), it->second.end());
+                }
+            }
+            else {
+                collect_positions_from_tree(static_cast<TreeNode*>(ptr), word, offset, depth + 1, out);
+            }
+        }
     }
+
+    inline static void get_all_positions_from_tree(const string& word, size_t offset, unordered_set<size_t>& out) {
+        collect_positions_from_tree(tree_data.tree, word, offset, 0, out);
+    }
+
+    //const set<size_t>* get_positions_from_tree(const string& word, size_t offset) {
+    //    TreeNode* current = tree_data.tree;
+
+    //    for (size_t i = 0; ; ++i) {
+    //        if (!current) return nullptr;
+
+    //        // Reached the end of the word
+    //        if (offset + i >= word.length()) return nullptr;
+
+    //        int idx = index_fixer(word[offset + i]);
+    //        int dollar_idx = index_fixer('$');
+
+    //        void* next_ptr = nullptr;
+
+    //        // Try regular path
+    //        if (current->pointers[idx]) {
+    //            next_ptr = current->pointers[idx];
+    //        }
+    //        // Try $ path
+    //        else if (current->pointers[dollar_idx]) {
+    //            next_ptr = current->pointers[dollar_idx];
+    //        }
+    //        else {
+    //            return nullptr;
+    //        }
+
+    //        // Check if this is a leaf (string*)
+    //        string* str_ptr = static_cast<string*>(next_ptr);
+    //        auto it = tree_data.filters_map.find(*str_ptr);
+    //        if (it != tree_data.filters_map.end()) {
+    //            return &it->second;
+    //        }
+
+    //        // Not a leaf, keep going
+    //        current = static_cast<TreeNode*>(next_ptr);
+    //    }
+    //}
+
 
 	int run_tree_mcs_search() {
         cout << "[MCSTreeSearch] Starting MCS Tree search...\n";
@@ -109,34 +155,41 @@ namespace Tree_MCS_Search {
 
         // === Phase 2: Iterate over each search word ===
         cout << "[MCSTreeSearch] Start iterating over search words...\n";
+        #pragma omp parallel for reduction(+:count_total_finds)
         for (size_t word_index = 0; word_index < total_words; ++word_index) {
             const string& word = search_words[word_index];
             const size_t word_length = word.length();
             
             // === Phase 3: Scan windows of word ===
+            unordered_set<MatchPos> all_positions;
+
             for (size_t offset = 0; offset <= word_length - FILTER_NUMBER_OF_MATCHES; ++offset) {
-                const set<size_t>* positions = get_positions_from_tree(word, offset);
-                if (positions) {
-                    for (size_t pos : *positions) {
-                        size_t position_text = pos - offset;
+                unordered_set<size_t> positions;
+                get_all_positions_from_tree(word, offset, positions);
 
-                        if (position_text + word.size() >= text.size())
-                            continue;
-
-                        if (check_matches(text, position_text, word)) {
-                            if (insert_or_update_match(results, word, position_text))
-                                count_total_finds++;
-                        }
-                    }
+                for (size_t pos : positions) {
+                    MatchPos mp = { pos - offset, offset };
+                    all_positions.insert(mp);
                 }
             }
+
+            // Now iterate over all_positions
+            for (const MatchPos& mp : all_positions) {
+                if (mp.position + word.size() >= text.size()) continue;
+
+                if (check_matches(text, mp.position, word)) {
+                    if (insert_or_update_match(results, word, mp.position))
+                        count_total_finds++;
+                }
+            }
+
             print_progress(static_cast<int>(word_index), static_cast<int>(total_words));
         }
 
         auto end = steady_clock::now();
         duration<double> elapsed_seconds = end - start;
         double seconds = elapsed_seconds.count();
-        Summary summary = { "Positional Search", count_total_finds, seconds };
+        Summary summary = { "Tree Search", count_total_finds, seconds };
 
         vector<WordMatch> results_vector(results.begin(), results.end());
         vector<string> output_lines = convert_matches_to_lines(results_vector);

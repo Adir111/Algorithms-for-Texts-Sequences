@@ -130,6 +130,7 @@
     <ClInclude Include="config.hpp" />
     <ClInclude Include="create_mcs_tree.hpp" />
     <ClInclude Include="main.hpp" />
+    <ClInclude Include="MatchPos.hpp" />
     <ClInclude Include="mcs_creation.hpp" />
     <ClInclude Include="TreeNode.hpp" />
     <ClInclude Include="random_text.hpp" />
