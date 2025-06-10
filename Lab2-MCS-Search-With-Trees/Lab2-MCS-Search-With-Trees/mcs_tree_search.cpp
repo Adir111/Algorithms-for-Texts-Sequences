@@ -82,45 +82,6 @@ namespace Tree_MCS_Search {
         collect_positions_from_tree(tree_data.tree, word, offset, 0, out);
     }
 
-    //const set<size_t>* get_positions_from_tree(const string& word, size_t offset) {
-    //    TreeNode* current = tree_data.tree;
-
-    //    for (size_t i = 0; ; ++i) {
-    //        if (!current) return nullptr;
-
-    //        // Reached the end of the word
-    //        if (offset + i >= word.length()) return nullptr;
-
-    //        int idx = index_fixer(word[offset + i]);
-    //        int dollar_idx = index_fixer('$');
-
-    //        void* next_ptr = nullptr;
-
-    //        // Try regular path
-    //        if (current->pointers[idx]) {
-    //            next_ptr = current->pointers[idx];
-    //        }
-    //        // Try $ path
-    //        else if (current->pointers[dollar_idx]) {
-    //            next_ptr = current->pointers[dollar_idx];
-    //        }
-    //        else {
-    //            return nullptr;
-    //        }
-
-    //        // Check if this is a leaf (string*)
-    //        string* str_ptr = static_cast<string*>(next_ptr);
-    //        auto it = tree_data.filters_map.find(*str_ptr);
-    //        if (it != tree_data.filters_map.end()) {
-    //            return &it->second;
-    //        }
-
-    //        // Not a leaf, keep going
-    //        current = static_cast<TreeNode*>(next_ptr);
-    //    }
-    //}
-
-
 	int run_tree_mcs_search() {
         cout << "[MCSTreeSearch] Starting MCS Tree search...\n";
         int count_total_finds = 0;
