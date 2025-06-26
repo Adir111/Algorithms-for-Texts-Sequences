@@ -1,0 +1,3 @@
+Search Type: Tree Array Search
+Matches Found: 10515
+Time took: 2037.838788 Seconds

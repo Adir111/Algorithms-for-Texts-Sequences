@@ -82,31 +82,100 @@ namespace Tree_MCS_Search {
         collect_positions_from_tree(tree_data.tree, word, offset, 0, out);
     }
 
-	int run_tree_mcs_search() {
+    static void collect_positions_from_array_tree(int node_index, const string& word, size_t offset, size_t depth, unordered_set<size_t>& out) {
+        if (node_index == -1 || offset + depth >= word.length()) return;
+
+        int idx = index_fixer(word[offset + depth]);
+        int dollar_idx = index_fixer('$');
+
+        for (int symbol_index : { idx, dollar_idx }) {
+            int next = tree_data_array.tree[node_index].pointers[symbol_index];
+            if (next == -1) continue;
+
+            if (tree_data_array.tree[node_index].is_leaf[symbol_index]) {
+                if (next >= 0 && static_cast<size_t>(next) < tree_data_array.filters_positions.size()) {
+                    const WordMatch& match = tree_data_array.filters_positions[next];
+                    out.insert(match.positions.begin(), match.positions.end());
+                }
+            }
+            else {
+                collect_positions_from_array_tree(next, word, offset, depth + 1, out);
+            }
+        }
+    }
+
+    static int array_run_tree_mcs_search(const string& text, const vector<string>& search_words) {
+        cout << "[MCSTreeSearch] Starting MCS Tree (Array) search...\n";
+        int count_total_finds = 0;
+
+        if (tree_data_array.tree.empty()) {
+            cerr << "[MCSTreeSearch] Array tree is empty, cannot run search.\n";
+            return -1;
+        }
+
+        set<WordMatch> results;
+        size_t total_words = search_words.size();
+        auto start = steady_clock::now();
+
+        // === Phase 2: Iterate over search words ===
+        cout << "[MCSTreeSearch] Start iterating over search words...\n";
+        #pragma omp parallel for reduction(+:count_total_finds)
+        for (size_t word_index = 0; word_index < total_words; ++word_index) {
+            const string& word = search_words[word_index];
+            const size_t word_length = word.length();
+
+            unordered_set<MatchPos> all_positions;
+
+            for (size_t offset = 0; offset <= word_length - FILTER_NUMBER_OF_MATCHES; ++offset) {
+                unordered_set<size_t> positions;
+                collect_positions_from_array_tree(0, word, offset, 0, positions);
+
+                for (size_t pos : positions) {
+                    MatchPos mp = { pos - offset, offset };
+                    all_positions.insert(mp);
+                }
+            }
+
+            for (const MatchPos& mp : all_positions) {
+                if (mp.position + word.size() >= text.size()) continue;
+
+                if (check_matches(text, mp.position, word)) {
+                    if (insert_or_update_match(results, word, mp.position))
+                        count_total_finds++;
+                }
+            }
+
+            print_progress(static_cast<int>(word_index), static_cast<int>(total_words));
+        }
+
+        auto end = steady_clock::now();
+        duration<double> elapsed_seconds = end - start;
+        double seconds = elapsed_seconds.count();
+        Summary summary = { "Tree Array Search", count_total_finds, seconds };
+
+        vector<WordMatch> results_vector(results.begin(), results.end());
+        vector<string> output_lines = convert_matches_to_lines(results_vector);
+
+        int status = save_to_file(output_lines, MCS_TREE_SEARCH_OUTPUT_FILENAME, true);
+        save_to_file(summary.to_lines(), MCS_TREE_SEARCH_SUMMARY_FILENAME, true);
+
+        if (status == 0)
+            cout << "[MCSTreeSearch] MCS search complete with total finds " << count_total_finds
+            << ". Results saved to " << MCS_TREE_SEARCH_OUTPUT_FILENAME << '\n';
+
+        return status;
+    }
+
+
+    static int nodes_addresses_run_tree_mcs_search(const string& text, const vector<string>& search_words) {
         cout << "[MCSTreeSearch] Starting MCS Tree search...\n";
         int count_total_finds = 0;
 
-        // === Phase 1: Read files ===
-        // Load Text
-        string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
-        if (text.empty()) {
-            cerr << "[MCSTreeSearch] Failed to load text - its empty or doesn`t exist.\n";
-            return -1;
-        }
-
-        // Load search words
-        vector<string> search_words = read_lines_from_file(SEARCH_WORDS_FILENAME);
-        if (search_words.empty()) {
-            cerr << "[MCSTreeSearch] Failed to load search words.\n";
-            return -1;
-        }
-
-        // Verify tree exist
+        // === Phase 1: Verify tree exist and inits ===
         if (tree_data.tree == nullptr) {
             cerr << "[MCSTreeSearch] Failed to load tree data - it doesnt exist.\n";
             return -1;
         }
-
 
         // --- Prepare container to collect results ---
         set<WordMatch> results;
@@ -162,4 +231,39 @@ namespace Tree_MCS_Search {
         if (status == 0) cout << "[StandardMCSSearch] MCS search complete with total finds " << count_total_finds << ". Results saved to " << MCS_TREE_SEARCH_OUTPUT_FILENAME << '\n';
         return status;
 	}
+
+    int run_tree_mcs_search() {
+        // === Load Text ===
+        string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
+        if (text.empty()) {
+            cerr << "[MCSTreeSearch] Failed to load text - it's empty or doesn't exist.\n";
+            return -1;
+        }
+
+        // === Load search words ===
+        vector<string> search_words = read_lines_from_file(SEARCH_WORDS_FILENAME);
+        if (search_words.empty()) {
+            cerr << "[MCSTreeSearch] Failed to load search words.\n";
+            return -1;
+        }
+
+        int choice;
+        while (true) {
+            cout << "Pick search implementation:\n1 - Tree as array implementation\n2 - Tree as nodes with addresses implementation\n";
+            cin >> choice;
+            cout << "\n";
+            if (choice != 1 && choice != 2)
+                cout << "Invalid choice, choose between 1 or 2";
+            else break;
+        }
+
+        switch (choice) {
+        case 1:
+            return array_run_tree_mcs_search(text, search_words);
+        case 2:
+            return nodes_addresses_run_tree_mcs_search(text, search_words);
+        }
+
+        return -1;
+    }
 }

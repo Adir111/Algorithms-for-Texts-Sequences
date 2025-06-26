@@ -13,12 +13,13 @@ namespace Config {
     const int MINIMAL_MATCHES = 15; // minimal number of matches
     const int FILTER_NUMBER_OF_MATCHES = 5; // number of matches in the filter
     const char Y_LETTER = 't'; // the start char the text is being generated from (up to z)
+    const size_t SIZE = 'z' - Y_LETTER + 2; // Size of positions array, an extra position for $
+
     const std::string MCS_OUTPUT_FILENAME = "mcs_output"; // Output file for mcs
     const std::string RANDOM_GENERATED_TEXT_FILENAME = "generated_text"; // Output file for random generated text
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
     const std::string MCS_TREE_SEARCH_OUTPUT_FILENAME = "tree_mcs_search_output"; // Output file for tree MCS search algorithm
     const std::string MCS_TREE_SEARCH_SUMMARY_FILENAME = "summary_tree_mcs"; // Output file for summary of Tree MCS Search
-
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
     const std::vector<std::string> OPTIONS = {

@@ -7,6 +7,29 @@ using namespace Config;
 namespace Create_MCS_Tree {
 
     /**
+     * @brief Returns the index of the word in the filters_map. If it doesn't exist, adds it.
+     *
+     * @param word The filtered word.
+     * @param position The position in the text to insert.
+     * @return Index of the WordMatch in the filters_map vector.
+     */
+    static size_t get_or_add_filtered_word(const std::string& word, size_t position) {
+        for (size_t i = 0; i < tree_data_array.filters_positions.size(); ++i) {
+            if (tree_data_array.filters_positions[i].word == word) {
+                tree_data_array.filters_positions[i].positions.insert(position);
+                return i;
+            }
+        }
+
+        // If not found, create and add a new WordMatch
+        WordMatch new_match;
+        new_match.word = word;
+        new_match.positions.insert(position);
+        tree_data_array.filters_positions.push_back(new_match);
+        return tree_data_array.filters_positions.size() - 1;
+    }
+
+    /**
      * @brief Applies a binary filter to a given word and returns a filtered version of the word.
      *
      * The method creates a filtered version of the input `word`, where characters corresponding
@@ -39,50 +62,100 @@ namespace Create_MCS_Tree {
         return letter - Y_LETTER;
     }
 
-    /**
-     * @brief Constructs a multi-filter character sequence tree from input files.
-     *
-     * Reads a random text file and a set of MCS filters, then builds a tree
-     * by sliding a window over the text and inserting filtered characters.
-     *
-     * @return 0 on success, -1 on failure (e.g., file loading error).
-     */
-	int create_mcs_tree() {
-        if (tree_data.tree != nullptr) {
-            cout << "[MCSTreeBuilder] Tree has already been built!";
-            return 0;
-        }
-
-        cout << "[MCSTreeBuilder] Starting filters map creation...\n";
-
-        // === Phase 1: Read files ===
-        string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
-        if (text.empty()) {
-            cerr << "[MCSTreeBuilder] Failed to load text.\n";
+    static int convert_node_tree_to_array() {
+        if (!tree_data.tree) {
+            cerr << "[MCSTreeBuilder] Cannot convert: tree_data.tree is null.\n";
             return -1;
         }
 
-        vector<string> filters = read_lines_from_file(MCS_OUTPUT_FILENAME);
-        if (filters.empty()) {
-            cerr << "[MCSTreeBuilder] Failed to load MCS filters.\n";
-            return -1;
+        // Reset the array-based data
+        tree_data_array.tree.clear();
+        tree_data_array.filters_positions.clear();
+
+        // === Step 1: Copy filters_map to filters_positions ===
+        for (const auto& pair : tree_data.filters_map) {
+            WordMatch match;
+            match.word = pair.first;
+            match.positions = pair.second;
+            tree_data_array.filters_positions.push_back(std::move(match));
         }
 
-        // === Phase 2: Iterate through text ===
+        // === Step 2: Map from TreeNode* to array index ===
+        std::unordered_map<TreeNode*, int> node_to_index;
+        std::queue<std::pair<TreeNode*, int>> q;
+
+        tree_data_array.tree.emplace_back(); // root node
+        node_to_index[tree_data.tree] = 0;
+        q.push({ tree_data.tree, 0 });
+
+        while (!q.empty()) {
+            TreeNode* current_node = q.front().first;
+            int current_index = q.front().second;
+            q.pop();
+
+            for (int i = 0; i < Config::SIZE; ++i) {
+                if (current_node->pointers[i] == nullptr)
+                    continue;
+
+                if (current_node->is_leaf[i]) {
+                    // Leaf: pointer holds a string*
+                    string* filtered_word = static_cast<string*>(current_node->pointers[i]);
+
+                    // Find index of the filtered word in filters_positions
+                    auto it = std::find_if(
+                        tree_data_array.filters_positions.begin(),
+                        tree_data_array.filters_positions.end(),
+                        [&](const WordMatch& wm) { return wm.word == *filtered_word; });
+
+                    if (it == tree_data_array.filters_positions.end()) {
+                        cerr << "[MCSTreeBuilder] Warning: Filtered word not found: " << *filtered_word << "\n";
+                        continue;
+                    }
+
+                    int leaf_index = static_cast<int>(std::distance(tree_data_array.filters_positions.begin(), it));
+                    tree_data_array.tree[current_index].pointers[i] = leaf_index;
+                    tree_data_array.tree[current_index].is_leaf[i] = true;
+                }
+                else {
+                    // Internal node: pointer holds a TreeNode*
+                    TreeNode* child_node = static_cast<TreeNode*>(current_node->pointers[i]);
+
+                    // If not visited, assign new index and push to queue
+                    if (node_to_index.find(child_node) == node_to_index.end()) {
+                        int new_index = static_cast<int>(tree_data_array.tree.size());
+                        node_to_index[child_node] = new_index;
+                        tree_data_array.tree.emplace_back();
+                        q.push({ child_node, new_index });
+                    }
+
+                    int child_index = node_to_index[child_node];
+                    tree_data_array.tree[current_index].pointers[i] = child_index;
+                }
+            }
+        }
+
+        cout << "[MCSTreeBuilder] Successfully converted node tree to array representation.\n";
+        return 0;
+    }
+
+
+    // Tree as nodes with addresses implementation
+    static int nodes_addresses_create_mcs_tree(const string& text, const vector<string>& filters) {
         tree_data.tree = new TreeNode();
         size_t text_len = text.length();
         size_t total_iterations = text_len - SEARCH_WORD_SIZE + 1;
 
+        // === Phase 1: Iterate through text ===
         for (size_t i = 0; i < total_iterations; ++i) {
 
-            // === Phase 3: Iterate through filters ===
+            // === Phase 2: Iterate through filters ===
             for (const string& filter : filters) {
                 string word = text.substr(i, filter.size());
 
                 string filtered = apply_filter_to_word(word, filter);
                 tree_data.filters_map[filtered].insert(i);
 
-                // === Phase 4: Create Tree Nodes
+                // === Phase 3: Create Tree Nodes
                 TreeNode* current = tree_data.tree;
                 for (size_t j = 0; j < filtered.size(); ++j) {
                     char ch = filtered[j];
@@ -101,14 +174,6 @@ namespace Create_MCS_Tree {
                             current->pointers[idx] = static_cast<void*>(new string(filtered));
                             current->is_leaf[idx] = true;
                         }
-                        // This block was used for debugging purposes - at the leafs, only strings are expected.
-                        //else {
-                        //    string* existing = static_cast<string*>(current->pointers[idx]);
-                        //    if (existing == nullptr) {
-                        //        cout << "[MCSTreeBuilder] Error - non-leaf node found at terminal position.\n";
-                        //        return -1;
-                        //    }
-                        //}
                     }
 
                 }
@@ -118,6 +183,46 @@ namespace Create_MCS_Tree {
         }
 
         cout << "[MCSTreeBuilder] MCS tree creation complete.\n";
-		return 0;
-	}
+        return 0;
+    }
+
+    /**
+     * @brief Constructs a multi-filter character sequence tree from input files.
+     *
+     * Reads a random text file and a set of MCS filters, then builds a tree
+     * by sliding a window over the text and inserting filtered characters.
+     * 
+     * Implementing tree as array and also nodes with addresses.
+     *
+     * @return 0 on success, -1 on failure (e.g., file loading error).
+     */
+    int create_mcs_tree() {
+        if (tree_data.tree != nullptr || tree_data_array.tree.size() != 0) {
+            cout << "[MCSTreeBuilder] Tree has already been built!\n";
+            return 0;
+        }
+
+        // === Phase 1: Read files ===
+        string text = read_text_from_file(RANDOM_GENERATED_TEXT_FILENAME);
+        if (text.empty()) {
+            cerr << "[MCSTreeBuilder] Failed to load text.\n";
+            return -1;
+        }
+
+        vector<string> filters = read_lines_from_file(MCS_OUTPUT_FILENAME);
+        if (filters.empty()) {
+            cerr << "[MCSTreeBuilder] Failed to load MCS filters.\n";
+            return -1;
+        }
+
+        cout << "[MCSTreeBuilder] Starting creating MCS tree as nodes with addresses.\n";
+        if (nodes_addresses_create_mcs_tree(text, filters) != 0) {
+            cout << "[MCSTreeBuilder] Failed creating MCS tree as nodes with addresses!\n";
+            return -1;
+        }
+        cout << "[MCSTreeBuilder] Converting MCS tree to array representation.\n";
+        return convert_node_tree_to_array();
+    }
+
+    
 }

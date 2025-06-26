@@ -5,13 +5,11 @@
 #include "config.hpp"
 #include "WordMatch.hpp"
 
-// Set your desired SIZE
-constexpr size_t SIZE = 'z' - Config::Y_LETTER + 2; // an extra position for $
 
 struct TreeNode {
     TreeNode* father;
-    void* pointers[SIZE]; // Can point to WordMatch* or TreeNode*
-    bool is_leaf[SIZE];
+    void* pointers[Config::SIZE]; // Can point to WordMatch* or TreeNode*
+    bool is_leaf[Config::SIZE];
 
     // Default constructor
     TreeNode() : father(nullptr) {
