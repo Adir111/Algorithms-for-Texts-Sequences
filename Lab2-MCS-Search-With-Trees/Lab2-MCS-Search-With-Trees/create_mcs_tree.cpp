@@ -88,6 +88,9 @@ namespace Create_MCS_Tree {
         node_to_index[tree_data.tree] = 0;
         q.push({ tree_data.tree, 0 });
 
+        size_t processed_nodes = 0;
+        size_t total_estimated_nodes = tree_data.filters_map.size();
+
         while (!q.empty()) {
             TreeNode* current_node = q.front().first;
             int current_index = q.front().second;
@@ -132,6 +135,9 @@ namespace Create_MCS_Tree {
                     tree_data_array.tree[current_index].pointers[i] = child_index;
                 }
             }
+
+            processed_nodes++;
+            print_progress(static_cast<int>(processed_nodes), static_cast<int>(total_estimated_nodes));
         }
 
         cout << "[MCSTreeBuilder] Successfully converted node tree to array representation.\n";
