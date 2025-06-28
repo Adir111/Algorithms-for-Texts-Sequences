@@ -7,6 +7,7 @@ using namespace MCS;
 using namespace SearchWordsAndTextGenerator;
 using namespace Create_MCS_Tree;
 using namespace Tree_MCS_Search;
+using namespace FinalSummary;
 
 int main() {
     int choice;
@@ -30,6 +31,9 @@ int main() {
             break;
         case 4:
             handle_operation(run_tree_mcs_search, choice);
+            break;
+        case 5:
+            handle_operation(create_final_summary, choice);
             break;
         case 0:
             cout << "Exiting program. Goodbye!\n";

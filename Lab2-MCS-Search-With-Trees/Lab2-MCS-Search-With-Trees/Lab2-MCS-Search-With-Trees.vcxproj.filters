@@ -45,6 +45,9 @@
     <ClCompile Include="create_text_with_search_words.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="final_summary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hpp">
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MatchPos.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="final_summary.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

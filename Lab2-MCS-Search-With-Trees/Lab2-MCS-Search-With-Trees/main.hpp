@@ -9,5 +9,6 @@
 #include "create_text_with_search_words.hpp"
 #include "create_mcs_tree.hpp"
 #include "mcs_tree_search.hpp"
+#include "final_summary.hpp"
 
 #endif

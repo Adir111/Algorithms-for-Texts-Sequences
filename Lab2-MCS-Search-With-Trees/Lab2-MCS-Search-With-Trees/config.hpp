@@ -21,13 +21,15 @@ namespace Config {
     const std::string SEARCH_WORDS_FILENAME = "search_words"; // Output file for search words
     const std::string MCS_TREE_SEARCH_OUTPUT_FILENAME = "tree_mcs_search_output"; // Output file for tree MCS search algorithm
     const std::string MCS_TREE_SEARCH_SUMMARY_FILENAME = "summary_tree_mcs"; // Output file for summary of Tree MCS Search
+    const std::string COMBINED_SUMMARY_FILENAME = "summary_all"; // Output file for combined summary of all searches
 
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
     const std::vector<std::string> OPTIONS = {
         "MCS Creation",
         "Random Text and Search Words Creation",
         "MCS Tree Creation",
-        "MCS Tree Search"
+        "MCS Tree Search",
+        "Create Final Summary"
     }; // List of choices for user
 
     /**

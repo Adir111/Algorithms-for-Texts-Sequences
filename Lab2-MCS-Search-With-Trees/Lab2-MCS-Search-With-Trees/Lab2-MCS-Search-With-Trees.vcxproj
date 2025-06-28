@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="config.hpp" />
     <ClInclude Include="create_mcs_tree.hpp" />
+    <ClInclude Include="final_summary.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MatchPos.hpp" />
     <ClInclude Include="mcs_creation.hpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="create_mcs_tree.cpp" />
     <ClCompile Include="create_text_with_search_words.cpp" />
     <ClCompile Include="create_text_with_search_words.hpp" />
+    <ClCompile Include="final_summary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TreeData.cpp" />
     <ClCompile Include="TreeData.hpp" />
