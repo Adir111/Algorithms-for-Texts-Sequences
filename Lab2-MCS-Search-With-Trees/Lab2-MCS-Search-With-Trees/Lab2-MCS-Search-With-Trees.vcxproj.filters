@@ -24,15 +24,6 @@
     <ClCompile Include="mcs_creation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="random_text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="search_words_generator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="search_words_generator.hpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,8 +39,11 @@
     <ClCompile Include="TreeData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TreeDataArray.cpp">
+    <ClCompile Include="create_text_with_search_words.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="create_text_with_search_words.hpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,9 +54,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mcs_creation.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="random_text.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Summary.hpp">
@@ -84,12 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MatchPos.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeArrayElement.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeDataArray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

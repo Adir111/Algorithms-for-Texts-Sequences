@@ -5,7 +5,6 @@
 #include "config.hpp"
 #include "WordMatch.hpp"
 
-
 struct TreeNode {
     TreeNode* father;
     void* pointers[Config::SIZE]; // Can point to WordMatch* or TreeNode*

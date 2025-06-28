@@ -132,10 +132,7 @@
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MatchPos.hpp" />
     <ClInclude Include="mcs_creation.hpp" />
-    <ClInclude Include="TreeArrayElement.hpp" />
-    <ClInclude Include="TreeDataArray.hpp" />
     <ClInclude Include="TreeNode.hpp" />
-    <ClInclude Include="random_text.hpp" />
     <ClInclude Include="Summary.hpp" />
     <ClInclude Include="mcs_tree_search.hpp" />
     <ClInclude Include="utils.hpp" />
@@ -144,15 +141,13 @@
   <ItemGroup>
     <ClCompile Include="config.cpp" />
     <ClCompile Include="create_mcs_tree.cpp" />
+    <ClCompile Include="create_text_with_search_words.cpp" />
+    <ClCompile Include="create_text_with_search_words.hpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TreeData.cpp" />
     <ClCompile Include="TreeData.hpp" />
     <ClCompile Include="mcs_creation.cpp" />
-    <ClCompile Include="random_text.cpp" />
-    <ClCompile Include="search_words_generator.cpp" />
-    <ClCompile Include="search_words_generator.hpp" />
     <ClCompile Include="mcs_tree_search.cpp" />
-    <ClCompile Include="TreeDataArray.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

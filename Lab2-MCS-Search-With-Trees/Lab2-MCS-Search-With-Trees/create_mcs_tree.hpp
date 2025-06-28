@@ -4,9 +4,7 @@
 #include "utils.hpp"
 #include "config.hpp"
 #include "TreeNode.hpp"
-#include "TreeArrayElement.hpp"
 #include "TreeData.hpp"
-#include "TreeDataArray.hpp"
 #include <queue>
 
 namespace Create_MCS_Tree {
