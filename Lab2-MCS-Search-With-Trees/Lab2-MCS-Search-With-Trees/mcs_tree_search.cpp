@@ -41,6 +41,19 @@ namespace Tree_MCS_Search {
         return false;
     }
 
+    /**
+     * @brief Recursively collects positions of matches from the tree data structure.
+     *
+     * This function traverses the tree nodes to find matching positions for a given word
+     * starting at a certain offset and depth. It collects the positions of matching
+     * substrings and stores them in the output set.
+     *
+     * @param node The current node of the tree to explore.
+     * @param word The word to search for in the tree.
+     * @param offset The current offset within the word to match.
+     * @param depth The current depth in the tree to traverse.
+     * @param out The set to store the resulting matching positions.
+     */
     static void collect_positions_from_tree(TreeNode* node, const string& word, size_t offset, size_t depth, unordered_set<size_t>& out) {
         if (!node || offset + depth >= word.length()) return;
 
@@ -78,11 +91,31 @@ namespace Tree_MCS_Search {
         }
     }
 
+    /**
+     * @brief Retrieves all positions from the tree for a given word starting at a specific offset.
+     *
+     * This function calls `collect_positions_from_tree` to recursively gather matching
+     * positions from the tree, starting at the provided offset for the given word.
+     *
+     * @param word The word to search for in the tree.
+     * @param offset The offset within the word to match.
+     * @param out The set to store the resulting matching positions.
+     */
     inline static void get_all_positions_from_tree(const string& word, size_t offset, unordered_set<size_t>& out) {
         collect_positions_from_tree(tree_data.tree, word, offset, 0, out);
     }
 
-
+    /**
+     * @brief Executes the MCS Tree search algorithm.
+     *
+     * This function initiates the tree search by loading the text and search words,
+     * initializing the tree data, and performing parallel searches for each word in the
+     * search list. It collects matching positions, verifies matches against the text,
+     * and stores the results. The results are then saved to an output file and a summary
+     * of the search is saved.
+     *
+     * @return int Status code indicating success (0) or failure (-1).
+     */
     int run_tree_mcs_search() {
         cout << "[MCSTreeSearch] Starting MCS Tree search...\n";
 

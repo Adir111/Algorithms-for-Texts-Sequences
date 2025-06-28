@@ -40,6 +40,17 @@ namespace FinalSummary {
         return !summary.search_type.empty() && summary.matches_found >= 0 && summary.time_took >= 0.0;
     }
 
+    /**
+     * @brief Displays the instructions for preparing and generating the final summary.
+     *
+     * This function provides step-by-step instructions to the user on how to:
+     * 1. Update configuration values in the second project (Lab1).
+     * 2. Run the project and execute specific steps for creating filters and performing searches.
+     * 3. Copy the summary files from each search type into the current directory.
+     * 4. Enter the correct filenames for each summary when prompted during the final summary creation process.
+     *
+     * These instructions help guide the user in preparing the necessary files for generating a combined final summary.
+     */
     static void print_instructions() {
         cout << "[FinalSummary] To use this, you should do those prerequisites:\n";
         cout << "1. Go to the second project (Lab1), and update the following config values:\n";
