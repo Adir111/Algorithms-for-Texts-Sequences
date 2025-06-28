@@ -157,9 +157,6 @@
     <ClCompile Include="standard_mcs_search.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
