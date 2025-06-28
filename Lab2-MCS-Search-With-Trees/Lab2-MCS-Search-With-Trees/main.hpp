@@ -6,8 +6,7 @@
 #include "config.hpp"
 #include "utils.hpp"
 #include "mcs_creation.hpp"
-#include "random_text.hpp"
-#include "search_words_generator.hpp"
+#include "create_text_with_search_words.hpp"
 #include "create_mcs_tree.hpp"
 #include "mcs_tree_search.hpp"
 

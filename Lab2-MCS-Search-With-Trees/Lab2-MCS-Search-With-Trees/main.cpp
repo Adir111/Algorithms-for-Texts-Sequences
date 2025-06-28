@@ -4,8 +4,7 @@ using namespace std;
 using namespace Config;
 using namespace Utils;
 using namespace MCS;
-using namespace RandomText;
-using namespace SearchWordsGenerator;
+using namespace SearchWordsAndTextGenerator;
 using namespace Create_MCS_Tree;
 using namespace Tree_MCS_Search;
 
@@ -24,15 +23,12 @@ int main() {
             handle_operation(mcs_creation, choice);
             break;
         case 2:
-            handle_operation(generate_text_and_save, choice);
+            handle_operation(generate_text_and_search_words, choice);
             break;
         case 3:
-            handle_operation(generate_search_words, choice);
-            break;
-        case 4:
             handle_operation(create_mcs_tree, choice);
             break;
-        case 5:
+        case 4:
             handle_operation(run_tree_mcs_search, choice);
             break;
         case 0:
