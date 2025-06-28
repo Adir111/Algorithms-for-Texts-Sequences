@@ -6,7 +6,6 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-// #include <unordered_map>
 #include <vector>
 #include <string>
 #include <chrono>
@@ -87,14 +86,6 @@ namespace Utils {
      * @param total Total number of iterations (must be > 0).
      */
     void print_progress(int current, int total);
-
-    ///** OUT OF USE - unable to read such large file. Saved in global variable instead.
-    // * @brief Loads filters map from a file into an unordered_map.
-    // *
-    // * @param filename Path to the filters map file
-    // * @return unordered_map<string, vector<int>> map of filtered words to positions
-    // */
-    // std::unordered_map<std::string, vector<int>> load_filters_map(const std::string& filename);
 
     /**
      * @brief Inserts a WordMatch into the set, or updates the existing match with a new position.
