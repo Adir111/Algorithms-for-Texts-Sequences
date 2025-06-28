@@ -11,6 +11,7 @@ namespace Config {
         cout << "================ Program Configuration ================\n";
         cout << "Text size                       : " << TEXT_SIZE << "\n";
         cout << "Number of Search Words          : " << NUMBER_OF_SEARCH_WORDS << "\n";
+        cout << "Number of Variants              : " << NUMBER_OF_VARIATIONS << "\n";
         cout << "Y-Letter                        : " << Y_LETTER << "\n";
         cout << "Search_Word_Size (pattern)      : " << SEARCH_WORD_SIZE << "\n";
         cout << "Minimal_Matches (min hits)      : " << MINIMAL_MATCHES << "\n";

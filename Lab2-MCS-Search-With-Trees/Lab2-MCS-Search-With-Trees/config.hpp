@@ -7,12 +7,13 @@
 
 namespace Config {
 
-    const int TEXT_SIZE = 10000000; // 10 million characters
-    const int NUMBER_OF_SEARCH_WORDS = 10000; // Number of search words (taken from the start of the text)
+    const int TEXT_SIZE = 1000000; // 1 million characters
+    const int NUMBER_OF_SEARCH_WORDS = 1000; // Number of search words (taken from the start of the text)
+    const int NUMBER_OF_VARIATIONS = 10; // Number of variations of search word inserted into the text
     const int SEARCH_WORD_SIZE = 21; // size of word for search
     const int MINIMAL_MATCHES = 15; // minimal number of matches
-    const int FILTER_NUMBER_OF_MATCHES = 5; // number of matches in the filter
-    const char Y_LETTER = 't'; // the start char the text is being generated from (up to z)
+    const int FILTER_NUMBER_OF_MATCHES = 6; // number of matches in the filter
+    const char Y_LETTER = 'a'; // the start char the text is being generated from (up to z)
     const size_t SIZE = 'z' - Y_LETTER + 2; // Size of positions array, an extra position for $
 
     const std::string MCS_OUTPUT_FILENAME = "mcs_output"; // Output file for mcs
@@ -24,8 +25,7 @@ namespace Config {
     const int PROGRESS_UPDATES_COUNT = 10000; // Used to control how often progress is updated during a loop
     const std::vector<std::string> OPTIONS = {
         "MCS Creation",
-        "Random Text Creation",
-        "Search Words Creation",
+        "Random Text and Search Words Creation",
         "MCS Tree Creation",
         "MCS Tree Search"
     }; // List of choices for user
